@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" th:href="@{/css/Styles.css}">
+    <link rel="stylesheet" th:href="@{/css/signupStyles.css}">
+</head>
+<body>
+
+	<div class="header-container">
+		<img th:src="@{/images/plantstories_logo.png}" alt="#">
+		<div class="header-inner-text-container">
+			<h1>Plant Stories</h1>
+		</div>
+	</div>
+	
+    <div class="signup-container">
+        <h1 class="signup-title">Create an Account</h1>
+        <form action="/signup" method="post" th:object="${signupForm}" class="signup-form">
+        	<!-- CSRF Token -->
+    		<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        	
+            <div class="input-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" th:field="*{username}" placeholder="Enter your username">
+                <p class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Error</p>
+            </div>
+
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" th:field="*{password}" placeholder="Enter your password">
+                <p class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Error</p>
+            </div>
+
+            <div class="input-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" th:field="*{confirmPassword}" placeholder="Confirm your password">
+                <p class="error" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}">Error</p>
+            </div>
+
+            <button type="submit" class="btn">Sign Up</button>
+        </form>
+
+        <div class="login-link">
+            <p>Already have an account? <a href="/login">Login here</a></p>
+        </div>
+    </div>
+</body>
+</html>

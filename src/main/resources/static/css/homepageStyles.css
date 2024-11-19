@@ -1,0 +1,164 @@
+
+body{
+    background-color: #f4f4f4;
+}
+.header-container{
+	width: 100vw;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin: 1em 0;
+	padding: 0.5em 0;
+	border-bottom: 1px solid black;
+}
+
+.common-header-container{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100vw;
+	gap: 10px;
+}
+
+.header-container img{
+	width: 100px;
+	height: 100px;
+}
+
+.header-inner-text-container{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	text-align: center;
+	flex-direction: column;
+}
+
+.mobile-left-alignment-header-container{
+	display: none;
+}
+
+.form_btn_logout{
+    width: 100%;
+    padding: 10px;
+    background-color: #FF4C4C;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: background-color 0.3s ease;
+}
+
+.cards_container{
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	flex-wrap: wrap;
+	gap: 3vw;
+	padding: 2em 0;
+}
+
+.cards_common_container{
+	display: flex;
+	position: relative;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 5px;
+	width: 30vw;
+	background-color: salmon;
+	border-radius: 10px;
+	padding: 4em 0.75em;
+}
+
+.card_title{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	gap: 5px;
+	}
+
+.card_title img{
+	width: 100px;
+	height: 100px;
+}
+
+
+.card_title h2,h5,p{
+	text-align: center;
+}
+
+.card_title h2{
+	font-size: 2.5em;
+}
+
+
+.cards_common_container:hover{
+	border: 2px solid black;
+	cursor: pointer;
+}
+
+.tailored_venues_card_container{
+	background-color: #FFEB3B;
+}
+.about_us_card_container{
+	background-color: #FFEB3B;
+}
+.advertise_card_common_container{
+	background-color: #FF9800;
+}
+.manage_user_card_common_container{
+	background-color: #03A9F4;
+}
+.verify_venue_card_common_container{
+	background-color: #FF7043 ;
+}
+.verify_rating_card_common_container{
+	background-color: #607D8B   ;
+}
+
+.card_title p{
+	font-size: 1.5em;
+}
+
+.card_anchor_tag{
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	left: 0;
+	top: 0;
+}
+
+/* Responsive Design for Mobile */
+@media (max-width: 768px) {
+    
+    .left-alignment-header-container{
+    	display: none;
+    }
+    
+    .header-container{
+		font-size: 0.75em;
+	}
+	
+	.center-alignment-header-container{
+    	width: 75vw;
+    }
+    
+    .right-alignment-header-container{
+    	width: 25vw;
+    }
+	.mobile-left-alignment-header-container{
+		display: flex;
+		font-size: 0.75em;
+	}
+	.common-header-container img{
+		width: 75px;
+		height: 75px;
+	}
+	.cards_common_container{
+		width: 90vw;
+		padding: 3em 0;
+	}
+}
