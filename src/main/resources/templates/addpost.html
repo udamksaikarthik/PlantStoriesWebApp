@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Post</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" th:href="@{/css/homepageStyles.css}">
+    <link rel="stylesheet" th:href="@{/css/addPostsStyles.css}">
+</head>
+<body>
+	<div class="header-container">
+		<div class="left-alignment-header-container common-header-container">
+			<h1>Welcome, <span th:text="${userName}"></span></h1>
+		</div>
+		<div class="center-alignment-header-container common-header-container">
+			<img class="app_logo_img" th:src="@{/images/plantstories_logo.png}" alt="#">
+			<div class="header-inner-text-container">
+				<h1>Plant Stories</h1>
+			</div>
+		</div>
+		<div class="right-alignment-header-container common-header-container">
+			<form class="right-alignment-header-container-mobile-logout-form" action="/logout" method="post">
+			    <button type="submit" class="form_btn_logout">Logout</button>
+			</form>
+			<button class="mobile_menu_btn" onclick="menuBtn()">
+				<img id="mobile_menu_img_id" class="mobile_menu_icon" alt="#" th:src="@{/images/mobile_menu_icon.png}">
+			</button>
+		</div>
+	</div>
+	
+	<div id="mobile_menu_container_id" class="mobile_menu_container">
+		<a href="#">Profile</a>
+		<a href="/">Feed</a>
+		<a href="#">Post</a>
+		<a href="#">Ask4Help</a>
+		<form action="/logout" method="post">
+			    <button type="submit" class="form_btn_logout">Logout</button>
+		</form>
+	</div>
+	
+	<div id="mobile-left-alignment-header-container-id" class="mobile-left-alignment-header-container common-header-container">
+			<h1>Welcome, <span th:text="${userName}"></span></h1>
+	</div>
+	
+	<div class="body_container">
+		<div class="menu_desktop_container">
+			<a href="#">Profile</a>
+			<a href="/">Feed</a>
+			<a href="#">Post</a>
+			<a href="#">Ask4Help</a>
+		</div>
+		<div class="feed_container">
+			 <h1>Create a New Post</h1>
+        <p class="disclaimer">Share as much or as little as you like – your story is yours to tell.</p>
+
+        <!-- Form starts here -->
+        <form th:action="@{/posts/create}" th:object="${post}" method="post" enctype="multipart/form-data">
+            <!-- Post Title -->
+            <label for="postTitle">
+                Post Title <span style="color: red;">*</span>:
+                <button type="button" class="info-icon" onclick="toggleTooltip(this, 'Enter a descriptive title for your post.')">i</button>
+            </label>
+            <input type="text" id="postTitle" name="postTitle" th:field="*{postTitle}" maxlength="255" />
+			<p class="error" th:if="${#fields.hasErrors('postTitle')}" th:errors="*{postTitle}"></p>
+            
+            <!-- Post Description -->
+            <label for="postDescription">
+                Post Description <span style="color: red;">*</span>:
+                <button type="button" class="info-icon" onclick="toggleTooltip(this, 'Write a detailed description of your post.')">i</button>
+            </label>
+            <textarea id="postDescription" name="postDescription" th:field="*{postDescription}" rows="4"></textarea>
+			<p class="error" th:if="${#fields.hasErrors('postDescription')}" th:errors="*{postDescription}"></p>
+            
+            <!-- Care Routine -->
+            <label for="careRoutine">
+                Care Routine:
+                <button type="button" class="info-icon" onclick="toggleTooltip(this, 'Describe your plant care routine here.')">i</button>
+            </label>
+            <textarea id="careRoutine" name="careRoutine" th:field="*{careRoutine}" rows="2"></textarea>
+
+            <!-- Reflection -->
+            <label for="reflection">
+                Reflection:
+                <button type="button" class="info-icon" onclick="toggleTooltip(this, 'Share your personal reflections or thoughts.')">i</button>
+            </label>
+            <textarea id="reflection" name="reflection" th:field="*{reflection}" rows="2"></textarea>
+
+            <!-- Mood -->
+            <label for="mood">
+                Mood:
+                <button type="button" class="info-icon" onclick="toggleTooltip(this, 'Describe your current mood.')">i</button>
+            </label>
+            <input type="text" id="mood" name="mood" th:field="*{mood}" />
+
+            <!-- Weather -->
+            <label for="weather">
+                Weather:
+                <button type="button" class="info-icon" onclick="toggleTooltip(this, 'Describe the weather conditions.')">i</button>
+            </label>
+            <input type="text" id="weather" name="weather" th:field="*{weather}" />
+
+			<!-- Previous Story Achievements -->
+            <label for="previousAchievements">
+                Previous Story Achievements:
+                <button type="button" class="info-icon" onclick="toggleTooltip(this, 'Link to any related achievements or previous stories here.')">i</button>
+            </label>
+            <textarea id="previousStoryAchievements" name="previousStoryAchievements" th:field="*{previousStoryAchievements}" rows="3"></textarea>
+            
+            <!-- Media Upload -->
+            <label for="mediaData">Upload Media (Images/Videos):</label>
+            <input type="file" id="mediaData" name="mediaData" th:field="*{mediaData}" multiple accept="image/*,video/*" onchange="validateFileCount(this), previewMedia()" />
+			
+			<!-- Display a message if the file count exceeds the limit -->
+			<p id="fileCountError" style="color: red; display: none;">You can only upload up to 5 files.</p>
+			<p class="error" th:if="${#fields.hasErrors('mediaData')}" th:errors="*{mediaData}"></p>
+						
+            <!-- Media Preview Section -->
+            <div class="preview-container" id="preview-container"></div>
+
+            <!-- Submit Button -->
+            <button class="createPostBtn" type="submit">Create Post</button>
+        </form>
+		</div>
+	</div>
+	
+	<!-- Full-Screen Modal -->
+    <div class="modal" id="modal" onclick="closeModal()">
+        <img id="modalImage" />
+        <video id="modalVideo" controls></video>
+    </div>
+    
+    <script type="text/javascript" th:src="@{/js/home.js}"></script>
+    <script type="text/javascript" th:src="@{/js/addPost.js}"></script>
+</body>
+</html>

@@ -24,6 +24,10 @@ public class Users {
     @NotBlank(message = "Confirm password is required")
     private String confirmPassword;
 
+
+    // bio for user profile information
+    private String bio;
+    
     // Timestamp for when the user was created
     private Date createdAt;
 
@@ -108,4 +112,15 @@ public class Users {
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
+
+	public String getBio() {
+		return bio;
+	}
+
+	public void setBio(String bio) {
+		this.bio = bio;
+	}
+    
+    
+    
 }

@@ -40,11 +40,7 @@ public class UserController {
         }else {
         	System.out.println("bindingResult has no Errors.");
         }
-
-        // Process the valid form (e.g., save user to the database)
-        // Signup logic here...
-
-        return "/";  // Redirect to login after successful signup
+        return "/";  
     }
 	
 	@GetMapping("/signup")

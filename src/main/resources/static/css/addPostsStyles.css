@@ -1,0 +1,176 @@
+
+.feed_container h1 {
+    text-align: center;
+    color: #4CAF50;
+}
+
+.feed_container form {
+    width: 90%;
+}
+
+.feed_container .disclaimer {
+    font-size: 14px;
+    color: #666;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+form label {
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 15px;
+}
+
+form .info-icon {
+    margin-left: 5px;
+    color: #4CAF50;
+    cursor: pointer;
+    font-size: 14px;
+    text-decoration: underline;
+}
+
+.tooltip {
+    display: none;
+    position: absolute;
+    background-color: #333;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    z-index: 1000;
+    max-width: 300px;
+    transform: translateY(100%);
+}
+
+.tooltip-visible {
+    display: block;
+}
+
+form input[type="text"], form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+form input[type="file"] {
+    margin-top: 10px;
+}
+
+.createPostBtn, .info-icon {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.createPostBtn{
+	width: 100%;
+	margin: 2em 0;
+}
+
+.createPostBtn:hover {
+    background-color: #45a049;
+}
+
+/* Preview Section */
+.preview-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.preview-container img,
+.preview-container video {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+/* Full-Screen Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 10000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal img,
+.modal video {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 10px;
+}
+
+/* Styling for the tooltip */
+.tooltip {
+    display: none;
+    position: absolute;
+    background-color: #333;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    z-index: 1000;
+    max-width: 200px;
+}
+
+.tooltip-visible {
+    display: block;
+}
+
+/* Adjust spacing and alignment for labels and buttons */
+form label {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.info-icon {
+    margin-left: 5px;
+    color: #4CAF50;
+    cursor: pointer;
+    font-size: 14px;
+    background: none;
+    border: none;
+    text-decoration: underline;
+}
+
+/* Hover effect for the info-icon button */
+.info-icon:hover {
+    background-color: #4CAF50; /* Green background */
+    color: white; /* White text color */
+    text-decoration: none; /* Remove underline on hover */
+}
+
+.error {
+    color: red;
+    font-size: 0.9rem;
+}
+
+/* Responsive Design for Mobile */
+@media (max-width: 768px) {
+	.preview-container{
+		justify-content: center;
+	}
+	
+	.tooltip {
+	    max-width: 200px;
+	}
+}
