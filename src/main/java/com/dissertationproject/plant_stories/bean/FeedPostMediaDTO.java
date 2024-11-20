@@ -1,6 +1,7 @@
 package com.dissertationproject.plant_stories.bean;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -18,6 +19,7 @@ public class FeedPostMediaDTO {
     private String previousStoryAchievements; // Achievements
     private LocalDateTime createdDate; // Post creation date
     private Long userId; // ID of the user who created the post
+    private String username; // username of the user who created the post
 
     // List of media associated with the post
     private List<MediaDTO> mediaList;
@@ -30,8 +32,16 @@ public class FeedPostMediaDTO {
     public void setPostId(Long postId) {
         this.postId = postId;
     }
+    
+    public String getUsername() {
+		return username;
+	}
 
-    public String getPostTitle() {
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPostTitle() {
         return postTitle;
     }
 
@@ -110,6 +120,12 @@ public class FeedPostMediaDTO {
     public void setMediaList(List<MediaDTO> mediaList) {
         this.mediaList = mediaList;
     }
+    
+ // Getter for the formatted date
+    public String getFormattedCreatedDate() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy, hh:mm:ss a");
+        return createdDate != null ? createdDate.format(formatter) : null;
+    }
 
     @Override
     public String toString() {
@@ -136,6 +152,7 @@ public class FeedPostMediaDTO {
         private String mediaType; // Media type (e.g., image/jpeg, video/mp4)
         private String fileName; // File name
         private byte[] mediaData; // Binary data for the media
+        private String base64MediaData; // Base64-encoded data for rendering
 
         // Getters and Setters
         public Long getId() {
@@ -168,6 +185,14 @@ public class FeedPostMediaDTO {
 
         public void setMediaData(byte[] mediaData) {
             this.mediaData = mediaData;
+        }
+        
+        public String getBase64MediaData() {
+            return base64MediaData;
+        }
+
+        public void setBase64MediaData(String base64MediaData) {
+            this.base64MediaData = base64MediaData;
         }
 
         @Override

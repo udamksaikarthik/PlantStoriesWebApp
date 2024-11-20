@@ -50,64 +50,80 @@
 			<a href="#">Ask4Help</a>
 		</div>
 		<div class="feed_container">
-			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, molestias. Enim et minima officiis voluptate amet. Laudantium quia, dicta nisi cumque porro omnis sunt incidunt nam aspernatur, ratione vero quod qui est quisquam fuga exercitationem quis itaque! Aliquid officiis enim quam ut, eum facilis aperiam quisquam excepturi minus ipsam? Voluptates.</p>
-			<p>Post2</p>
-			<p>Post3</p>
-			<p>Post4</p>
-			<br>
-			<br>
-			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, molestias. Enim et minima officiis voluptate amet. Laudantium quia, dicta nisi cumque porro omnis sunt incidunt nam aspernatur, ratione vero quod qui est quisquam fuga exercitationem quis itaque! Aliquid officiis enim quam ut, eum facilis aperiam quisquam excepturi minus ipsam? Voluptates.</p>
-			<p>Post6</p>
-			<br>
-			<br>
-			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, molestias. Enim et minima officiis voluptate amet. Laudantium quia, dicta nisi cumque porro omnis sunt incidunt nam aspernatur, ratione vero quod qui est quisquam fuga exercitationem quis itaque! Aliquid officiis enim quam ut, eum facilis aperiam quisquam excepturi minus ipsam? Voluptates.</p>
-			<p></p>
-			<br>
-			<br>
-			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, molestias. Enim et minima officiis voluptate amet. Laudantium quia, dicta nisi cumque porro omnis sunt incidunt nam aspernatur, ratione vero quod qui est quisquam fuga exercitationem quis itaque! Aliquid officiis enim quam ut, eum facilis aperiam quisquam excepturi minus ipsam? Voluptates.</p>
-			<p>Post2</p>
-			<p>Post3</p>
-			<p>Post4</p>
-			<br>
-			<br>
-			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, molestias. Enim et minima officiis voluptate amet. Laudantium quia, dicta nisi cumque porro omnis sunt incidunt nam aspernatur, ratione vero quod qui est quisquam fuga exercitationem quis itaque! Aliquid officiis enim quam ut, eum facilis aperiam quisquam excepturi minus ipsam? Voluptates.</p>
-			<p>Post6</p>
-			<br>
-			<br>
-			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, molestias. Enim et minima officiis voluptate amet. Laudantium quia, dicta nisi cumque porro omnis sunt incidunt nam aspernatur, ratione vero quod qui est quisquam fuga exercitationem quis itaque! Aliquid officiis enim quam ut, eum facilis aperiam quisquam excepturi minus ipsam? Voluptates.</p>
-			<p></p>
-			<br>
-			<br>
-			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, molestias. Enim et minima officiis voluptate amet. Laudantium quia, dicta nisi cumque porro omnis sunt incidunt nam aspernatur, ratione vero quod qui est quisquam fuga exercitationem quis itaque! Aliquid officiis enim quam ut, eum facilis aperiam quisquam excepturi minus ipsam? Voluptates.</p>
-			<p>Post2</p>
-			<p>Post3</p>
-			<p>Post4</p>
-			<br>
-			<br>
-			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, molestias. Enim et minima officiis voluptate amet. Laudantium quia, dicta nisi cumque porro omnis sunt incidunt nam aspernatur, ratione vero quod qui est quisquam fuga exercitationem quis itaque! Aliquid officiis enim quam ut, eum facilis aperiam quisquam excepturi minus ipsam? Voluptates.</p>
-			<p>Post6</p>
-			<br>
-			<br>
-			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, molestias. Enim et minima officiis voluptate amet. Laudantium quia, dicta nisi cumque porro omnis sunt incidunt nam aspernatur, ratione vero quod qui est quisquam fuga exercitationem quis itaque! Aliquid officiis enim quam ut, eum facilis aperiam quisquam excepturi minus ipsam? Voluptates.</p>
-			<p></p>
-			<br>
-			<br>
-			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, molestias. Enim et minima officiis voluptate amet. Laudantium quia, dicta nisi cumque porro omnis sunt incidunt nam aspernatur, ratione vero quod qui est quisquam fuga exercitationem quis itaque! Aliquid officiis enim quam ut, eum facilis aperiam quisquam excepturi minus ipsam? Voluptates.</p>
-			<p>Post2</p>
-			<p>Post3</p>
-			<p>Post4</p>
-			<br>
-			<br>
-			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, molestias. Enim et minima officiis voluptate amet. Laudantium quia, dicta nisi cumque porro omnis sunt incidunt nam aspernatur, ratione vero quod qui est quisquam fuga exercitationem quis itaque! Aliquid officiis enim quam ut, eum facilis aperiam quisquam excepturi minus ipsam? Voluptates.</p>
-			<p>Post6</p>
-			<br>
-			<br>
-			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, molestias. Enim et minima officiis voluptate amet. Laudantium quia, dicta nisi cumque porro omnis sunt incidunt nam aspernatur, ratione vero quod qui est quisquam fuga exercitationem quis itaque! Aliquid officiis enim quam ut, eum facilis aperiam quisquam excepturi minus ipsam? Voluptates.</p>
-			<p></p>
-			<br>
-			<br>
+					<h1>Plant Stories Feed</h1>
+		        <!-- Loop through posts -->
+		        <div class="post-card" th:each="post : ${feedPosts}">
+		            <!-- Post Header -->
+		            <div class="post-header">
+		                <div class="header-left">
+		                    <img class="profile-image" th:src="@{/images/plantstories_logo.png}" alt="User Image">
+		                    <span class="username" th:text="${post.username}"></span>
+		                </div>
+		                <div class="header-right">
+		                    <span class="posted-date" th:text="${post.getFormattedCreatedDate()}"></span>
+		                </div>
+		            </div>
+		            <hr>
+		            <!-- Post Body -->
+		            <div class="post-body">
+		                <h2 class="post-title" th:text="${post.postTitle}"></h2>
+		                <div class="post-details">
+						    <p th:if="${post.postDescription != null}">
+						        <span class="subheading">Post Description:</span> <span class="content" th:text="${post.postDescription}"></span>
+						    </p>
+						    <p th:if="${post.careRoutine != null}">
+						        <span class="subheading">Care Routine:</span> <span class="content" th:text="${post.careRoutine}"></span>
+						    </p>
+						    <p th:if="${post.reflection != null}">
+						        <span class="subheading">Reflection:</span> <span class="content" th:text="${post.reflection}"></span>
+						    </p>
+						    <p th:if="${post.mood != null}">
+						        <span class="subheading">Mood:</span> <span class="content" th:text="${post.mood}"></span>
+						    </p>
+						    <p th:if="${post.weather != null}">
+						        <span class="subheading">Weather:</span> <span class="content" th:text="${post.weather}"></span>
+						    </p>
+						    <p th:if="${post.previousStoryAchievements != null}">
+						        <span class="subheading">Achievements:</span> <span class="content" th:text="${post.previousStoryAchievements}"></span>
+						    </p>
+						</div>
+
+		            </div>
+		            <!-- Media Section -->
+		            <div class="post-media">
+					    <div class="media-container" th:each="media : ${post.mediaList}">
+					        <!-- Image Preview -->
+					        <img th:if="${media.mediaType.startsWith('image')}" 
+					             th:src="${media.base64MediaData}" 
+					             alt="Post Media" 
+					             class="media-preview" 
+					             onclick="showMediaFullscreen(this)">
+					             
+					        <!-- Video Preview -->
+					        <video th:if="${media.mediaType.startsWith('video')}" 
+					               class="media-preview-video" 
+					               controls 
+					               onclick="showVideoFullscreen(this)">
+					            <source th:src="${media.base64MediaData}" th:type="${media.mediaType}">
+					            
+					        </video>
+					    </div>
+					</div>
+		            <!-- Post Actions -->
+		            <div class="post-actions">
+		                <button class="action-button">Comment</button>
+		                <button class="action-button">View Comments</button>
+		                <button class="action-button">Share</button>
+		            </div>
+		        </div>
+		    </div>
+		
+		    <!-- Full-Screen Media Modal -->
+			<div id="fullscreen-modal" class="modal" onclick="closeMediaFullscreen()">
+			    <img id="modal-image" class="modal-content" style="display: none;">
+			    <video id="modal-video" class="modal-content" controls style="display: none;"></video>
+			</div>
 		</div>
-	</div>
 	
 	
     <script type="text/javascript" th:src="@{/js/home.js}"></script>

@@ -59,7 +59,7 @@
             <!-- Post Title -->
             <label for="postTitle">
                 Post Title <span style="color: red;">*</span>:
-                <button type="button" class="info-icon" onclick="toggleTooltip(this, 'Enter a descriptive title for your post.')">i</button>
+                <button type="button" class="info-icon" onclick="toggleTooltip(this, 'Give your story an intriguing title. For example, The Journey of My Lavender Plant or How I Revived My Garden After Winter or A Beautiful Surprise: Lilys First Bloom.')">i</button>
             </label>
             <input type="text" id="postTitle" name="postTitle" th:field="*{postTitle}" maxlength="255" />
 			<p class="error" th:if="${#fields.hasErrors('postTitle')}" th:errors="*{postTitle}"></p>
@@ -109,7 +109,7 @@
             
             <!-- Media Upload -->
             <label for="mediaData">Upload Media (Images/Videos):</label>
-            <input type="file" id="mediaData" name="mediaData" th:field="*{mediaData}" multiple accept="image/*,video/*" onchange="validateFileCount(this), previewMedia()" />
+            <input type="file" id="mediaData" name="mediaData" th:field="*{mediaData}" multiple accept="image/*,video/*" onchange="validateFileSize(this), validateFileCount(this), previewMedia()" />
 			
 			<!-- Display a message if the file count exceeds the limit -->
 			<p id="fileCountError" style="color: red; display: none;">You can only upload up to 5 files.</p>

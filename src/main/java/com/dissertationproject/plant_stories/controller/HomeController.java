@@ -1,5 +1,7 @@
 package com.dissertationproject.plant_stories.controller;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.dissertationproject.plant_stories.bean.FeedPostMediaDTO;
 import com.dissertationproject.plant_stories.bean.Posts;
 import com.dissertationproject.plant_stories.dao.UserRepository;
 import com.dissertationproject.plant_stories.model.Users;
@@ -43,6 +46,9 @@ public class HomeController {
         if (user != null) {
             mv.addObject("userName", user.getUsername());
         }
+        
+        ArrayList<FeedPostMediaDTO> feedPosts = homeServiceImpl.getAllPosts();
+        mv.addObject("feedPosts", feedPosts);
 		mv.setViewName("home.html");
 		return mv;
 	}

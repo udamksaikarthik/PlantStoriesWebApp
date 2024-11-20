@@ -11,6 +11,17 @@ function validateFileCount(input) {
             fileCountError.style.display = 'none'; // Hide error message
         }
     }
+    
+function validateFileSize(input) {
+        const maxSize = 10 * 1024 * 1024; // 10 MB
+        for (const file of input.files) {
+            if (file.size > maxSize) {
+                alert(`File ${file.name} exceeds the maximum size of 50MB.`);
+                input.value = ''; // Clear the input field
+                break;
+            }
+        }
+    }
  
 // Preview Media
 function previewMedia() {

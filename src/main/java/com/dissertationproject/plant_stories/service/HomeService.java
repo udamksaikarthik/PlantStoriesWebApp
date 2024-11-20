@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.dissertationproject.plant_stories.bean.FeedPostMediaDTO;
 import com.dissertationproject.plant_stories.bean.Posts;
 import com.dissertationproject.plant_stories.dao.HomeDao;
 import com.dissertationproject.plant_stories.model.MediaPost;
@@ -29,6 +30,13 @@ public class HomeService implements HomeServiceImpl{
 		homeDao.createPost(posts, mediaPosts);
 	}
 
+
+	@Override
+	public ArrayList<FeedPostMediaDTO> getAllPosts() {
+		// TODO Auto-generated method stub
+		return homeDao.getAllPosts();
+	}
+	
 	private ArrayList<MediaPost> getAllEntriesOfMedia(Long userId, @Valid Posts post) {
 		// TODO Auto-generated method stub
 		ArrayList<MediaPost> mediaPosts = new ArrayList<>();
@@ -83,5 +91,6 @@ public class HomeService implements HomeServiceImpl{
 		return postEntity;
 		
 	}
+
 
 }
