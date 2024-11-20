@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.dissertationproject.plant_stories.bean.CommentForm;
 import com.dissertationproject.plant_stories.bean.FeedPostMediaDTO;
 import com.dissertationproject.plant_stories.bean.Posts;
 import com.dissertationproject.plant_stories.dao.HomeDao;
+import com.dissertationproject.plant_stories.model.CommentPost;
 import com.dissertationproject.plant_stories.model.MediaPost;
 
 import jakarta.validation.Valid;
@@ -91,6 +93,37 @@ public class HomeService implements HomeServiceImpl{
 		return postEntity;
 		
 	}
+
+
+	@Override
+	public FeedPostMediaDTO getThisPostInfo(Long postId) {
+		// TODO Auto-generated method stub
+		return homeDao.getThisPostInfo(postId);
+	}
+
+
+	@Override
+	public void addComment(CommentForm commentForm, Long postId, Long id, String username) {
+		// TODO Auto-generated method stub
+		CommentPost commentPost = new CommentPost();
+		commentPost.setCommentText(commentForm.getCommentText());
+		String selectedReactions = "";
+
+		// Iterate over selected reactions and concatenate with a comma
+		for (String selectedReaction : commentForm.getSelectedReactions()) {
+		    if (!selectedReactions.isEmpty()) {
+		        selectedReactions += ", "; // Add a comma only if the string is not empty
+		    }
+		    selectedReactions += selectedReaction;
+		}
+		commentPost.setSelectedReactions(selectedReactions);
+		commentPost.setPostId(postId);
+		commentPost.setUserId(id);
+		commentPost.setUsername(username);
+		homeDao.addComment(commentPost);
+	}
+
+
 
 
 }

@@ -216,7 +216,7 @@ body{
 
 h1 {
     text-align: center;
-    color: #2c3e50;
+    color: #000000;
 }
 
 .post-card {
@@ -383,6 +383,23 @@ h1 {
 
 .post-title{
 	color: #000000;
+}
+
+.comments-container {
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-top: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.comment {
+    margin-bottom: 10px;
+}
+
+.comment-reactions {
+    font-size: 0.9rem;
+    color: #555;
 }
 
 /* Responsive Design for Mobile */

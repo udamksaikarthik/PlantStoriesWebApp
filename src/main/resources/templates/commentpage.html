@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plant Stories Feed</title>
+    <title>Add Post</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
     <link rel="stylesheet" th:href="@{/css/homepageStyles.css}">
+    <link rel="stylesheet" th:href="@{/css/addPostsStyles.css}">
+    <link rel="stylesheet" th:href="@{/css/commentPageStyles.css}">
 </head>
 <body>
 	<div class="header-container">
@@ -31,7 +33,7 @@
 	<div id="mobile_menu_container_id" class="mobile_menu_container">
 		<a href="#">Profile</a>
 		<a href="/">Feed</a>
-		<a href="/addPost">Post</a>
+		<a href="#">Post</a>
 		<a href="#">Ask4Help</a>
 		<form action="/logout" method="post">
 			    <button type="submit" class="form_btn_logout">Logout</button>
@@ -46,13 +48,14 @@
 		<div class="menu_desktop_container">
 			<a href="#">Profile</a>
 			<a href="/">Feed</a>
-			<a href="/addPost">Post</a>
+			<a href="#">Post</a>
 			<a href="#">Ask4Help</a>
 		</div>
 		<div class="feed_container">
-					<h1>Plant Stories Feed</h1>
-		        <!-- Loop through posts -->
-		        <div class="post-card" th:each="post : ${feedPosts}">
+			 <h1>Add Comment</h1>
+        <p class="disclaimer">Express your opinions with reactions and text on this post.</p>
+		
+		<div class="post-card" th:each="post : ${feedPost}">
 		            <!-- Post Header -->
 		            <a th:id="${post.postId}"></a>
 		            <div class="post-header">
@@ -110,54 +113,59 @@
 					        </video>
 					    </div>
 					</div>
-		            <!-- Post Actions -->
-		            <div class="post-actions">
-		                <button class="action-button"
-						        th:onclick="'location.href=\'/showComment?postId=' + ${post.postId} + '\''">
-						    Comment
-						</button>
-						
-						<button class="action-button" 
-						        th:onclick="'toggleComments(' + ${post.postId} + ')'">
-						    View Comments
-						</button>
-
-
-		                <button class="action-button" onclick="shareStory(this)"
-						        data-title="${post.postTitle}" 
-						        data-description="${post.postDescription}" 
-						        th:data-url="'/#' + ${post.postId}">
-						    Share
-						</button>
-		            </div>
-		            
-        			<!-- Comments Section -->
-			        <div class="comments-container" th:id="'comments-container-' + ${post.postId}" style="display: none;">
-
-			            <h3>Comments</h3>
-			            <div class="comment" th:each="comment : ${post.commentList}">
-			                <p>
-			                    <strong th:text="${comment.username}"></strong>: 
-			                    <span th:text="${comment.commentText}"></span>
-			                </p>
-			                <div class="comment-reactions" th:if="${comment.selectedReactions != null}">
-			                    <span th:each="reaction : ${comment.selectedReactions}" th:text="${reaction} + ' '"></span>
-			                </div>
-			            </div>
-			        </div>
-        			
-        			
-		        </div>
-		    </div>
-		
-		    <!-- Full-Screen Media Modal -->
-			<div id="fullscreen-modal" class="modal" onclick="closeMediaFullscreen()">
-			    <img id="modal-image" class="modal-content" style="display: none;">
-			    <video id="modal-video" class="modal-content" controls style="display: none;"></video>
+		        
+        <!-- Form starts here -->
+        <form th:id="commentbox" th:action="@{/posts/addComment(postId=${post.postId})}" th:object="${commentForm}" method="post">
+            
+            <div class="comment-box">
+                <textarea id="comment-textarea-${post.postId}" th:field="*{commentText}"placeholder="Write your comment here..." rows="4"></textarea>
+                <div class="reactions">
+			    <label>
+			        <input type="checkbox" th:field="*{selectedReactions}" value="🌿 Leaf It – Express admiration for this post.">
+			        <span class="emoji-text">🌿 Leaf It</span> <span class="description-text">– Express admiration for this post.</span>
+			    </label>
+			    <label>
+			        <input type="checkbox" th:field="*{selectedReactions}" value="🌷 Sprout Some Love – Show encouragement and appreciation.">
+			        <span class="emoji-text">🌷 Sprout Some Love</span> <span class="description-text">– Show encouragement and appreciation.</span>
+			    </label>
+			    <label>
+			        <input type="checkbox" th:field="*{selectedReactions}" value="💧 Watering Can – Offer supportive care and nurturing vibes.">
+			        <span class="emoji-text">💧 Watering Can</span> <span class="description-text">– Offer supportive care and nurturing vibes.</span>
+			    </label>
+			    <label>
+			        <input type="checkbox" th:field="*{selectedReactions}" value="☀️ Sunshine – Send positive energy and warm wishes.">
+			        <span class="emoji-text">☀️ Sunshine</span> <span class="description-text">– Send positive energy and warm wishes.</span>
+			    </label>
+			    <label>
+			        <input type="checkbox" th:field="*{selectedReactions}" value="🌱 Rooting For You – Show your support for their journey.">
+			        <span class="emoji-text">🌱 Rooting For You</span> <span class="description-text">– Show your support for their journey.</span>
+			    </label>
+			    <label>
+			        <input type="checkbox" th:field="*{selectedReactions}" value="🌸 Pledge – Commit to following this plant’s inspiring journey.">
+			        <span class="emoji-text">🌸 Pledge</span> <span class="description-text">– Commit to following this plant’s inspiring journey.</span>
+			    </label>
 			</div>
+			
+			<p class="error" th:text="${errorMessage}"></p>
+
+
+                <div class="comment-actions">
+		            <!-- Submit Button -->
+		            <button class="createPostBtn" type="submit">Add Comment</button>
+                </div>
+            </div>
+        </form>
+		        </div>
 		</div>
+	</div>
 	
-	
+	<!-- Full-Screen Modal -->
+    <div class="modal" id="modal" onclick="closeModal()">
+        <img id="modalImage" />
+        <video id="modalVideo" controls></video>
+    </div>
+    
     <script type="text/javascript" th:src="@{/js/home.js}"></script>
+    <script type="text/javascript" th:src="@{/js/addPost.js}"></script>
 </body>
 </html>
