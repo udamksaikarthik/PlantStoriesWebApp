@@ -36,11 +36,15 @@
                 </div>
 
                 <!-- Password -->
-                <div class="input-group">
-                    <label for="password">Password</label>
-                    <!-- Name attribute should be "password" for Spring Security compatibility -->
-                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
-                </div>
+				<div class="input-group">
+				    <label for="password">Password</label>
+				    <!-- Name attribute should be "password" for Spring Security compatibility -->
+				    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+				    <!-- Eye Icon for toggling visibility -->
+				    <span id="togglePassword" style="position: absolute; right: 10px; top: 50%; transform: translateY(0%); cursor: pointer;">
+				        👁️
+				    </span>
+				</div>
                 
                 <!-- Display error message if login fails -->
 	            <div th:if="${session.loginError}">

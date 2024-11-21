@@ -62,6 +62,7 @@ public class HomeDao {
 				    // Get the actual user object
 				    Users existingUser = user.get();
 					feedPost.setUsername(existingUser.getUsername());
+					feedPost.setUserId(existingUser.getId());
 				}
 				feedPost.setPostTitle(post.getPostTitle());
 				feedPost.setPostDescription(post.getPostDescription());

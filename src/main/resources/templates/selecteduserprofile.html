@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plant Stories Feed</title>
+    <title>Plant Stories - User Profile</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
     <link rel="stylesheet" th:href="@{/css/homepageStyles.css}">
+    <link rel="stylesheet" th:href="@{/css/profileStyles.css}">
 </head>
 <body>
 	<div class="header-container">
@@ -50,7 +51,25 @@
 			<a href="/ask4help">Ask4Help</a>
 		</div>
 		<div class="feed_container">
-					<h1>Plant Stories Feed</h1>
+			<h1>Profile</h1>
+			<div class="straight_line_class"></div>
+		        <div class="user_bio_and_profile_pic_container">
+		        	<div class="bio_container">
+		        		<label for="userInfoId">User Information/ Bio:</label>
+		        		<textarea id="userInfoId" rows="20" th:text="${userBio}" readonly></textarea>
+		        	</div>
+		        	<div class="profile_picture_and_name_container">
+		        		<img alt="user_profile_pic" th:src="@{/images/plantstories_logo.png}">
+		        		<h4 th:text="${selectedUsername}"></h4>
+		        	</div>
+		        </div>	
+		        <h1>Wild Roots Community Garden</h1>
+
+
+        </div>
+        
+        <div class="user_posts_container">
+        	<h1>Your Posts</h1>
 		        <!-- Loop through posts -->
 		        <div class="post-card" th:each="post : ${feedPosts}">
 		            <!-- Post Header -->
@@ -59,10 +78,6 @@
 		                <div class="header-left">
 		                    <img class="profile-image" th:src="@{/images/plantstories_logo.png}" alt="User Image">
 		                    <span class="username" th:text="${post.username}"></span>
-		                    <a class="user_logo_post_button_icon" 
-							   th:href="@{/showThisUserProfile(userId=${post.userId})}">
-							    
-							</a>
 		                </div>
 		                <div class="header-right">
 		                    <span class="posted-date" th:text="${post.getFormattedCreatedDate()}"></span>
@@ -116,6 +131,7 @@
 					</div>
 		            <!-- Post Actions -->
 		            <div class="post-actions">
+		            
 		                <button class="action-button"
 						        th:onclick="'location.href=\'/showComment?postId=' + ${post.postId} + '\''">
 						    Comment
@@ -126,7 +142,6 @@
 						    View Comments
 						</button>
 
-
 		                <button class="action-button" onclick="shareStory(this)"
 						        data-title="${post.postTitle}" 
 						        data-description="${post.postDescription}" 
@@ -136,34 +151,29 @@
 		            </div>
 		            
         			<!-- Comments Section -->
-					<div class="comments-container" th:id="'comments-container-' + ${post.postId}" style="display: none;">
-					    <h3>Comments</h3>
-					    <hr>
-					    <div th:if="${post.commentList != null && !post.commentList.isEmpty()}">
-					        <div class="comment" th:each="comment : ${post.commentList}">
-					            <p>
-					                <strong th:text="${comment.username}"></strong>: 
-					                <span th:text="${comment.commentText}"></span>
-					            </p>
-					            <div class="comment-reactions" th:if="${comment.selectedReactions != null}">
-					                <span th:each="reaction : ${comment.selectedReactions}" th:text="${reaction + ' '}"></span>
-					            </div>
-					            <hr>
-					        </div>
-					    </div>
-					    <p th:if="${post.commentList == null || post.commentList.isEmpty()}">No comments</p>
-					</div>
+			        <div class="comments-container" th:id="'comments-container-' + ${post.postId}" style="display: none;">
 
+			            <h3>Comments</h3>
+			            <div class="comment" th:each="comment : ${post.commentList}">
+			                <p>
+			                    <strong th:text="${comment.username}"></strong>: 
+			                    <span th:text="${comment.commentText}"></span>
+			                </p>
+			                <div class="comment-reactions" th:if="${comment.selectedReactions != null}">
+			                    <span th:each="reaction : ${comment.selectedReactions}" th:text="${reaction} + ' '"></span>
+			                </div>
+			            </div>
+			        </div>
         			
         			
 		        </div>
-		    </div>
+        </div>
+	    </div>
 		
-		    <!-- Full-Screen Media Modal -->
-			<div id="fullscreen-modal" class="modal" onclick="closeMediaFullscreen()">
-			    <img id="modal-image" class="modal-content" style="display: none;">
-			    <video id="modal-video" class="modal-content" controls style="display: none;"></video>
-			</div>
+	    <!-- Full-Screen Media Modal -->
+		<div id="fullscreen-modal" class="modal" onclick="closeMediaFullscreen()">
+		    <img id="modal-image" class="modal-content" style="display: none;">
+		    <video id="modal-video" class="modal-content" controls style="display: none;"></video>
 		</div>
 	
 	

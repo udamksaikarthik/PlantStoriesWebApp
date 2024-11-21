@@ -19,7 +19,7 @@ public class CommentPost {
     @Column(name = "comment_text", columnDefinition = "TEXT")
     private String commentText; // The text of the comment
 
-    @Column(name = "reaction")
+    @Column(name = "reaction", columnDefinition = "TEXT")
     private String selectedReactions; // List of selected reactions
 
     @Column(name = "post_id", nullable = false)
