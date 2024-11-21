@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plant Stories Feed</title>
+    <title>Plant Stories - User Profile</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
     <link rel="stylesheet" th:href="@{/css/homepageStyles.css}">
+    <link rel="stylesheet" th:href="@{/css/profileStyles.css}">
 </head>
 <body>
 	<div class="header-container">
@@ -50,7 +51,29 @@
 			<a href="/ask4help">Ask4Help</a>
 		</div>
 		<div class="feed_container">
-					<h1>Plant Stories Feed</h1>
+			<h1>Profile</h1>
+			<div class="straight_line_class"></div>
+		        <div class="user_bio_and_profile_pic_container">
+		        	<div class="bio_container">
+		        		<label for="userInfoId">User Information/ Bio:</label>
+		        		<textarea id="userInfoId" rows="20" th:text="${userBio}" readonly></textarea>
+		        	</div>
+		        	<div class="profile_picture_and_name_container">
+		        		<img alt="user_profile_pic" th:src="@{/images/plantstories_logo.png}">
+		        		<h4 th:text="${userName}"></h4>
+		        	</div>
+		        </div>	
+		        <h1>Wild Roots Community Garden</h1>
+	        <button class="action-button"
+			        th:onclick="'location.href=\'showEditProfile\''">
+			    Edit Profile
+			</button>
+
+
+        </div>
+        
+        <div class="user_posts_container">
+        	<h1>Plant Stories Feed</h1>
 		        <!-- Loop through posts -->
 		        <div class="post-card" th:each="post : ${feedPosts}">
 		            <!-- Post Header -->
@@ -113,15 +136,16 @@
 		            <!-- Post Actions -->
 		            <div class="post-actions">
 		                <button class="action-button"
-						        th:onclick="'location.href=\'/showComment?postId=' + ${post.postId} + '\''">
-						    Comment
+						        th:onclick="'location.href=\'/editPost?postId=' + ${post.postId} + '\''">
+						    Edit Post
 						</button>
-						
-						<button class="action-button" 
-						        th:onclick="'toggleComments(' + ${post.postId} + ')'">
-						    View Comments
-						</button>
-
+						<form th:action="@{/deletePost}" method=post>
+    						<input type="hidden" name="postId" th:value="${post.postId}">
+						    <button class="action-button action-button-red" 
+						        type="submit">
+						    Delete Post
+							</button>
+						</form>
 
 		                <button class="action-button" onclick="shareStory(this)"
 						        data-title="${post.postTitle}" 
@@ -148,13 +172,13 @@
         			
         			
 		        </div>
-		    </div>
+        </div>
+	    </div>
 		
-		    <!-- Full-Screen Media Modal -->
-			<div id="fullscreen-modal" class="modal" onclick="closeMediaFullscreen()">
-			    <img id="modal-image" class="modal-content" style="display: none;">
-			    <video id="modal-video" class="modal-content" controls style="display: none;"></video>
-			</div>
+	    <!-- Full-Screen Media Modal -->
+		<div id="fullscreen-modal" class="modal" onclick="closeMediaFullscreen()">
+		    <img id="modal-image" class="modal-content" style="display: none;">
+		    <video id="modal-video" class="modal-content" controls style="display: none;"></video>
 		</div>
 	
 	

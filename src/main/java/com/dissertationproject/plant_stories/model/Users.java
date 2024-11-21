@@ -44,6 +44,10 @@ public class Users {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
+
+    @Column(name = "bio", columnDefinition = "TEXT")
+    private String bio; // Care routine (optional)
+    
     /**
      * Default constructor for JPA.
      */
@@ -142,4 +146,12 @@ public class Users {
         this.role = role;
     }
 
+	public String getBio() {
+		return bio;
+	}
+
+	public void setBio(String bio) {
+		this.bio = bio;
+	}
+    
 }

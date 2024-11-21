@@ -10,4 +10,6 @@ public interface UserServiceImpl {
 
 	void registerUser(@Valid Users users);
 
+	void editprofile(Long id, String bio);
+
 }

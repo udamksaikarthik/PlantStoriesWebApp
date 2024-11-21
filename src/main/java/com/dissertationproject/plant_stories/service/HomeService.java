@@ -10,6 +10,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.dissertationproject.plant_stories.bean.CommentForm;
 import com.dissertationproject.plant_stories.bean.FeedPostMediaDTO;
+import com.dissertationproject.plant_stories.bean.FeedPostMediaDTO.CommentPostDTO;
+import com.dissertationproject.plant_stories.bean.FeedPostMediaDTO.MediaDTO;
 import com.dissertationproject.plant_stories.bean.Posts;
 import com.dissertationproject.plant_stories.dao.HomeDao;
 import com.dissertationproject.plant_stories.model.CommentPost;
@@ -122,6 +124,41 @@ public class HomeService implements HomeServiceImpl{
 		commentPost.setUsername(username);
 		homeDao.addComment(commentPost);
 	}
+
+
+	@Override
+	public ArrayList<FeedPostMediaDTO> getAllPosts(Long userId) {
+		// TODO Auto-generated method stub
+		return homeDao.getAllPosts(userId);
+	}
+
+
+	@Override
+	public void deletePost(FeedPostMediaDTO feedPostMediaDTO) {
+		// TODO Auto-generated method stub
+		Long postId = 0L;
+		ArrayList<Long> mediaIdList = new ArrayList<>();
+		ArrayList<Long> commentIdList = new ArrayList<>();
+		if(feedPostMediaDTO!=null) {
+			postId = feedPostMediaDTO.getPostId();
+			for (MediaDTO media : feedPostMediaDTO.getMediaList()) {
+				mediaIdList.add(media.getId());
+			}
+			for(CommentPostDTO comment: feedPostMediaDTO.getCommentList()) {
+				commentIdList.add(comment.getId());
+			}
+		}
+		homeDao.deletePost(postId, mediaIdList, commentIdList);
+	}
+
+
+	@Override
+	public FeedPostMediaDTO getPost(Long postId) {
+		// TODO Auto-generated method stub
+		return homeDao.getPost(postId);
+	}
+
+
 
 
 

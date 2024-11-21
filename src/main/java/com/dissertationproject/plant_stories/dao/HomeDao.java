@@ -163,5 +163,147 @@ public class HomeDao {
 	}
 
 
+	public ArrayList<FeedPostMediaDTO> getAllPosts(Long userId) {
+		// TODO Auto-generated method stub
+				ArrayList<FeedPostMediaDTO> feedPosts = new ArrayList<>();
+				
+				ArrayList<Posts> allPosts = (ArrayList<Posts>) postRepository.findAll().stream()
+					    .sorted(Comparator.comparing(Posts::getCreatedDate).reversed()) // Descending order by createdDate
+					    .collect(Collectors.toCollection(ArrayList::new));
+				
+				if(allPosts!=null) {
+					for (Posts post : allPosts) {
+						if(post.getUserId() == userId) {
+							Optional<Users> user = userRepository.findById(post.getUserId());
+							FeedPostMediaDTO feedPost = new FeedPostMediaDTO();
+							feedPost.setPostId(post.getId());
+							if(user.isPresent()) {
+							    // Get the actual user object
+							    Users existingUser = user.get();
+								feedPost.setUsername(existingUser.getUsername());
+							}
+							feedPost.setPostTitle(post.getPostTitle());
+							feedPost.setPostDescription(post.getPostDescription());
+							feedPost.setCareRoutine(post.getCareRoutine());
+							feedPost.setCreatedDate(post.getCreatedDate());
+							feedPost.setMood(post.getMood());
+							feedPost.setWeather(post.getWeather());
+							feedPost.setPreviousStoryAchievements(post.getPreviousStoryAchievements());
+							feedPost.setReflection(post.getReflection());
+							
+							ArrayList<MediaPost> allPostMedias = (ArrayList<MediaPost>) mediaPostsRepository.findByPostId(post.getId());
+
+							ArrayList<FeedPostMediaDTO.MediaDTO> mediaDTOList = new ArrayList<>();
+							if(allPostMedias!=null) {
+								for (MediaPost postMedia : allPostMedias) {
+									FeedPostMediaDTO.MediaDTO mediaDTO = new FeedPostMediaDTO.MediaDTO();
+									mediaDTO.setFileName(postMedia.getFileName());
+									mediaDTO.setMediaData(postMedia.getMediaData());
+									mediaDTO.setBase64MediaData("data:" + postMedia.getMediaType() + ";base64," +
+								            Base64.getEncoder().encodeToString(postMedia.getMediaData()));
+									mediaDTO.setMediaType(postMedia.getMediaType());
+									mediaDTO.setId(postMedia.getId());
+									mediaDTOList.add(mediaDTO);
+								}
+								feedPost.setMediaList(mediaDTOList);
+							}
+							
+							ArrayList<CommentPost> allpostComments = (ArrayList<CommentPost>) commentPostRepository.findAllByPostId(post.getId());
+
+							ArrayList<FeedPostMediaDTO.CommentPostDTO> commentPostDTOList = new ArrayList<>();
+							if(allpostComments!=null) {
+								for (CommentPost allpostComment : allpostComments) {
+									FeedPostMediaDTO.CommentPostDTO CommentPostDTO = new FeedPostMediaDTO.CommentPostDTO();
+									CommentPostDTO.setCommentText(allpostComment.getCommentText());
+									CommentPostDTO.setUsername(allpostComment.getUsername());
+									CommentPostDTO.setSelectedReactions(allpostComment.getSelectedReactions());
+									CommentPostDTO.setCreatedDate(allpostComment.getCreatedDate());
+									commentPostDTOList.add(CommentPostDTO);
+								}
+								feedPost.setCommentList(commentPostDTOList);
+							}
+							System.out.println("feedPost toString: "+feedPost.toString());
+							feedPosts.add(feedPost);
+						}
+					}
+				}
+				return feedPosts;
+	}
+
+
+	public void deletePost(Long postId, ArrayList<Long> mediaIdList, ArrayList<Long> commentIdList) {
+		// TODO Auto-generated method stub
+		postRepository.deleteById(postId);
+		for (Long mediaId : mediaIdList) {
+			mediaPostsRepository.deleteById(mediaId);
+		}
+		for (Long commentId : commentIdList) {
+			commentPostRepository.deleteById(commentId);
+		}
+	}
+
+
+	public FeedPostMediaDTO getPost(Long postId) {
+		FeedPostMediaDTO feedPost = new FeedPostMediaDTO();
+		
+		Optional<Posts> post = postRepository.findById(postId);
+		if(post.isPresent()) {
+		    // Get the actual user object
+		    Posts existingPost = post.get();
+		if(existingPost!=null) {
+				Optional<Users> user = userRepository.findById(existingPost.getUserId());
+				feedPost.setPostId(existingPost.getId());
+				if(user.isPresent()) {
+				    // Get the actual user object
+				    Users existingUser = user.get();
+					feedPost.setUsername(existingUser.getUsername());
+				}
+				feedPost.setPostTitle(existingPost.getPostTitle());
+				feedPost.setPostDescription(existingPost.getPostDescription());
+				feedPost.setCareRoutine(existingPost.getCareRoutine());
+				feedPost.setCreatedDate(existingPost.getCreatedDate());
+				feedPost.setMood(existingPost.getMood());
+				feedPost.setWeather(existingPost.getWeather());
+				feedPost.setPreviousStoryAchievements(existingPost.getPreviousStoryAchievements());
+				feedPost.setReflection(existingPost.getReflection());
+				
+				ArrayList<MediaPost> allPostMedias = (ArrayList<MediaPost>) mediaPostsRepository.findByPostId(existingPost.getId());
+
+				ArrayList<FeedPostMediaDTO.MediaDTO> mediaDTOList = new ArrayList<>();
+				if(allPostMedias!=null) {
+					for (MediaPost postMedia : allPostMedias) {
+						FeedPostMediaDTO.MediaDTO mediaDTO = new FeedPostMediaDTO.MediaDTO();
+						mediaDTO.setFileName(postMedia.getFileName());
+						mediaDTO.setMediaData(postMedia.getMediaData());
+						mediaDTO.setBase64MediaData("data:" + postMedia.getMediaType() + ";base64," +
+					            Base64.getEncoder().encodeToString(postMedia.getMediaData()));
+						mediaDTO.setMediaType(postMedia.getMediaType());
+						mediaDTO.setId(postMedia.getId());
+						mediaDTOList.add(mediaDTO);
+					}
+					feedPost.setMediaList(mediaDTOList);
+				}
+				
+				ArrayList<CommentPost> allpostComments = (ArrayList<CommentPost>) commentPostRepository.findAllByPostId(existingPost.getId());
+
+				ArrayList<FeedPostMediaDTO.CommentPostDTO> commentPostDTOList = new ArrayList<>();
+				if(allpostComments!=null) {
+					for (CommentPost allpostComment : allpostComments) {
+						FeedPostMediaDTO.CommentPostDTO CommentPostDTO = new FeedPostMediaDTO.CommentPostDTO();
+						CommentPostDTO.setId(allpostComment.getId());
+						CommentPostDTO.setCommentText(allpostComment.getCommentText());
+						CommentPostDTO.setUsername(allpostComment.getUsername());
+						CommentPostDTO.setSelectedReactions(allpostComment.getSelectedReactions());
+						CommentPostDTO.setCreatedDate(allpostComment.getCreatedDate());
+						commentPostDTOList.add(CommentPostDTO);
+					}
+					feedPost.setCommentList(commentPostDTOList);
+				}
+		}
+	}
+		return feedPost;
+	}
+
+
 
 }

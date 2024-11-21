@@ -483,8 +483,21 @@ h1 {
 	.feed_container{
 		width: 95%;
 	}
+	.post-card{
+		margin: 0;
+		width: 95%;
+	}
+	.header-right{
+		width: 40%;
+	}
 	.post-actions{
-	flex-direction: column;
-	gap: 10px;
+		flex-direction: column;
+		gap: 10px;
+	}
+	.mobile_menu_container{
+		position: fixed;
+		z-index: 9999;
+		width: 100vw;
+		margin-top: 30%;
 	}
 }

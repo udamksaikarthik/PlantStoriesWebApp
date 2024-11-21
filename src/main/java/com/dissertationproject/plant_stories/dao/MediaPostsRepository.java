@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.dissertationproject.plant_stories.model.MediaPost;
 
 @Repository
-public interface MediaPostsRepository extends JpaRepository<MediaPost, Integer>{
+public interface MediaPostsRepository extends JpaRepository<MediaPost, Long>{
 
 	ArrayList<MediaPost> findByPostId(Long id);
 

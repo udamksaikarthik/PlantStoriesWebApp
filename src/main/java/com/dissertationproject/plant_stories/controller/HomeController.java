@@ -15,11 +15,13 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.dissertationproject.plant_stories.bean.CommentForm;
+import com.dissertationproject.plant_stories.bean.EditProfileDTO;
 import com.dissertationproject.plant_stories.bean.FeedPostMediaDTO;
 import com.dissertationproject.plant_stories.bean.Posts;
 import com.dissertationproject.plant_stories.dao.UserRepository;
 import com.dissertationproject.plant_stories.model.Users;
 import com.dissertationproject.plant_stories.service.HomeServiceImpl;
+import com.dissertationproject.plant_stories.service.UserServiceImpl;
 
 import jakarta.validation.Valid;
 
@@ -29,7 +31,9 @@ public class HomeController {
 	
 	@Autowired
 	private UserRepository userRepository;
-	
+
+	@Autowired
+	private UserServiceImpl userServiceImpl;
 
 	@Autowired
 	private HomeServiceImpl homeServiceImpl;;
@@ -126,7 +130,7 @@ public class HomeController {
 			RedirectAttributes redirectAttributes) {
 		
 		ModelAndView mv = new ModelAndView();
-		if(commentForm.getCommentText().isBlank() || commentForm.getSelectedReactions().isEmpty()) {
+		if(commentForm.getCommentText().isBlank() && commentForm.getSelectedReactions().isEmpty()) {
 	        redirectAttributes.addFlashAttribute("errorMessage","Please write a comment or select a reaction to submit your comment!");
 			mv.setViewName("redirect:/showComment?postId="+postId);
 			return mv;
@@ -145,4 +149,56 @@ public class HomeController {
 		return mv;
 	}
 	
+	@PostMapping("/deletePost")
+	public ModelAndView deletePost(@RequestParam("postId") Long postId,
+			RedirectAttributes redirectAttributes) {
+		
+		ModelAndView mv = new ModelAndView();
+		FeedPostMediaDTO feedPostMediaDTO = homeServiceImpl.getPost(postId);
+		System.out.println(feedPostMediaDTO.toString());
+		
+		homeServiceImpl.deletePost(feedPostMediaDTO);
+		
+		mv.setViewName("redirect:/profile");
+		return mv;
+	}
+	
+	@GetMapping("/showEditProfile")
+	public ModelAndView showEditProfile() {
+		// Get the logged-in user's email (username in this case)
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();  // Get the logged-in user's email
+
+        // Fetch the user entity from the database using the email
+        Users user = userRepository.findByUsername(username);
+        
+        EditProfileDTO profileDTO = new EditProfileDTO();
+        profileDTO.setUsername(user.getUsername());
+        profileDTO.setBio(user.getBio());
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("profileDTO", profileDTO);
+		mv.addObject("userName", user.getUsername());
+		mv.setViewName("editprofile.html");
+		return mv;
+	}
+	
+	@PostMapping("/editProfile")
+	public ModelAndView editProfile(@Valid @ModelAttribute("profileDTO") EditProfileDTO profileDTO) {
+		System.out.println("Inside editProfile method");
+		System.out.println("userForm toString: "+ profileDTO.toString());
+		ModelAndView mv = new ModelAndView();
+        
+		// Get the logged-in user's email (username in this case)
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();  // Get the logged-in user's email
+
+        // Fetch the user entity from the database using the email
+        Users user = userRepository.findByUsername(username);
+        System.out.println("userID:"+ user.getId());
+        userServiceImpl.editprofile(user.getId(), profileDTO.getBio());
+        
+		mv.addObject("userName", user.getUsername());
+		mv.setViewName("redirect:/profile");
+		return mv;
+	}
 }
