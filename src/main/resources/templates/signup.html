@@ -31,12 +31,20 @@
             <div class="input-group">
                 <label for="password">Password</label>
                 <input type="password" id="password" th:field="*{password}" placeholder="Enter your password">
+                <!-- Eye Icon for toggling visibility -->
+			    <span id="togglePassword" style="position: absolute; right: 10px; top: 50%; transform: translateY(0%); cursor: pointer;">
+			        👁️
+			    </span>
                 <p class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Error</p>
             </div>
 
             <div class="input-group">
                 <label for="confirmPassword">Confirm Password</label>
                 <input type="password" id="confirmPassword" th:field="*{confirmPassword}" placeholder="Confirm your password">
+                <!-- Eye Icon for toggling visibility -->
+			    <span id="toggleConfirmPassword" style="position: absolute; right: 10px; top: 50%; transform: translateY(0%); cursor: pointer;">
+			        👁️
+			    </span>
                 <p class="error" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}">Error</p>
             </div>
 
@@ -47,5 +55,6 @@
             <p>Already have an account? <a href="/login">Login here</a></p>
         </div>
     </div>
+    <script type="text/javascript" th:src="@{/js/signup.js}"></script>
 </body>
 </html>

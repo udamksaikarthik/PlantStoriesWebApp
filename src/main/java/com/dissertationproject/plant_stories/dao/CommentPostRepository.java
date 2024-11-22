@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.dissertationproject.plant_stories.model.MediaPost;
+import com.dissertationproject.plant_stories.model.CommentPost;
 
 @Repository
-public interface MediaPostsRepository extends JpaRepository<MediaPost, Long>{
+public interface CommentPostRepository extends JpaRepository<CommentPost, Long>{
 
-	ArrayList<MediaPost> findByPostId(Long id);
+	ArrayList<CommentPost> findAllByPostId(Long postId);
 
 }

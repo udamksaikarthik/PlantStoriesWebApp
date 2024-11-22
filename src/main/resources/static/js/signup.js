@@ -1,14 +1,8 @@
-const form_success_messageId = document.getElementById("form-success-messageId");
-
-if(form_success_messageId.innerText!=""){
-	form_success_messageId.style.display = "block";
-}else{
-	form_success_messageId.style.display = "none";
-}
-
 document.addEventListener("DOMContentLoaded", function () {
         const passwordField = document.getElementById("password");
         const togglePassword = document.getElementById("togglePassword");
+        const confirmPasswordField = document.getElementById("confirmPassword");
+        const toggleConfirmPassword = document.getElementById("toggleConfirmPassword");
 
         togglePassword.addEventListener("click", function () {
             // Toggle the type attribute
@@ -17,5 +11,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // Toggle the icon (optional if using a text icon like 👁️)
             togglePassword.textContent = type === "password" ? "👁️" : "🙈";
+        });
+        
+        toggleConfirmPassword.addEventListener("click", function () {
+            // Toggle the type attribute
+            const type = confirmPasswordField.type === "password" ? "text" : "password";
+            confirmPasswordField.type = type;
+
+            // Toggle the icon (optional if using a text icon like 👁️)
+            toggleConfirmPassword.textContent = type === "password" ? "👁️" : "🙈";
         });
     });

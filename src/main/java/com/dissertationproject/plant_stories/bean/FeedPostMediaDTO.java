@@ -1,10 +1,11 @@
 package com.dissertationproject.plant_stories.bean;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
- * Represents a combined DTO for displaying post information with associated media.
+ * Represents a combined DTO for displaying post information with associated media and comments.
  */
 public class FeedPostMediaDTO {
 
@@ -18,9 +19,13 @@ public class FeedPostMediaDTO {
     private String previousStoryAchievements; // Achievements
     private LocalDateTime createdDate; // Post creation date
     private Long userId; // ID of the user who created the post
+    private String username; // Username of the user who created the post
 
     // List of media associated with the post
     private List<MediaDTO> mediaList;
+
+    // List of comments associated with the post
+    private List<CommentPostDTO> commentList;
 
     // Getters and Setters
     public Long getPostId() {
@@ -29,6 +34,14 @@ public class FeedPostMediaDTO {
 
     public void setPostId(Long postId) {
         this.postId = postId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPostTitle() {
@@ -111,9 +124,23 @@ public class FeedPostMediaDTO {
         this.mediaList = mediaList;
     }
 
+    public List<CommentPostDTO> getCommentList() {
+        return commentList;
+    }
+
+    public void setCommentList(List<CommentPostDTO> commentList) {
+        this.commentList = commentList;
+    }
+
+    // Getter for the formatted date
+    public String getFormattedCreatedDate() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy, hh:mm:ss a");
+        return createdDate != null ? createdDate.format(formatter) : null;
+    }
+
     @Override
     public String toString() {
-        return "PostDetailsDTO{" +
+        return "FeedPostMediaDTO{" +
                 "postId=" + postId +
                 ", postTitle='" + postTitle + '\'' +
                 ", postDescription='" + postDescription + '\'' +
@@ -124,7 +151,9 @@ public class FeedPostMediaDTO {
                 ", previousStoryAchievements='" + previousStoryAchievements + '\'' +
                 ", createdDate=" + createdDate +
                 ", userId=" + userId +
+                ", username='" + username + '\'' +
                 ", mediaList=" + mediaList +
+                ", commentList=" + commentList +
                 '}';
     }
 
@@ -136,6 +165,7 @@ public class FeedPostMediaDTO {
         private String mediaType; // Media type (e.g., image/jpeg, video/mp4)
         private String fileName; // File name
         private byte[] mediaData; // Binary data for the media
+        private String base64MediaData; // Base64-encoded data for rendering
 
         // Getters and Setters
         public Long getId() {
@@ -170,6 +200,14 @@ public class FeedPostMediaDTO {
             this.mediaData = mediaData;
         }
 
+        public String getBase64MediaData() {
+            return base64MediaData;
+        }
+
+        public void setBase64MediaData(String base64MediaData) {
+            this.base64MediaData = base64MediaData;
+        }
+
         @Override
         public String toString() {
             return "MediaDTO{" +
@@ -179,5 +217,77 @@ public class FeedPostMediaDTO {
                     '}';
         }
     }
-}
 
+    /**
+     * Represents comment details associated with a post.
+     */
+    public static class CommentPostDTO {
+        private Long id; // Comment ID
+        private String commentText; // The text of the comment
+        private String selectedReactions; // Reactions associated with the comment
+        private Long userId; // ID of the user who made the comment
+        private String username; // Username of the commenter
+        private LocalDateTime createdDate; // Date the comment was created
+
+        // Getters and Setters
+        public Long getId() {
+            return id;
+        }
+
+        public void setId(Long id) {
+            this.id = id;
+        }
+
+        public String getCommentText() {
+            return commentText;
+        }
+
+        public void setCommentText(String commentText) {
+            this.commentText = commentText;
+        }
+
+        public String getSelectedReactions() {
+            return selectedReactions;
+        }
+
+        public void setSelectedReactions(String selectedReactions) {
+            this.selectedReactions = selectedReactions;
+        }
+
+        public Long getUserId() {
+            return userId;
+        }
+
+        public void setUserId(Long userId) {
+            this.userId = userId;
+        }
+
+        public String getUsername() {
+            return username;
+        }
+
+        public void setUsername(String username) {
+            this.username = username;
+        }
+
+        public LocalDateTime getCreatedDate() {
+            return createdDate;
+        }
+
+        public void setCreatedDate(LocalDateTime createdDate) {
+            this.createdDate = createdDate;
+        }
+
+        @Override
+        public String toString() {
+            return "CommentPostDTO{" +
+                    "id=" + id +
+                    ", commentText='" + commentText + '\'' +
+                    ", selectedReactions='" + selectedReactions + '\'' +
+                    ", userId=" + userId +
+                    ", username='" + username + '\'' +
+                    ", createdDate=" + createdDate +
+                    '}';
+        }
+    }
+}

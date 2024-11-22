@@ -1,6 +1,7 @@
 package com.dissertationproject.plant_stories.dao;
 
 import java.util.Date;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -52,6 +53,17 @@ public class UserDao {
         userEntity.setCreatedAt(new Date());
 
         return userEntity;
+	}
+
+	public void editprofile(Long id, String bio) {
+		// TODO Auto-generated method stub
+		Optional<com.dissertationproject.plant_stories.model.Users> user = userRepository.findById(id);
+		
+		if(user.isPresent()) {
+			com.dissertationproject.plant_stories.model.Users existinguser = user.get();
+			existinguser.setBio(bio);
+			userRepository.save(existinguser);
+		}
 	}
 
 }

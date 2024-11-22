@@ -25,4 +25,10 @@ public class UserService implements UserServiceImpl{
 		userDao.saveUser(users);
 	}
 
+	@Override
+	public void editprofile(Long id, String bio) {
+		// TODO Auto-generated method stub
+		userDao.editprofile(id, bio);
+	}
+
 }

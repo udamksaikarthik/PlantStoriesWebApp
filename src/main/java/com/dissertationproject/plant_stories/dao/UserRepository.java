@@ -9,7 +9,7 @@ import com.dissertationproject.plant_stories.model.Users;
  * on the `Users` entity. It extends JpaRepository to leverage Spring Data JPA functionalities.
  */
 @Repository
-public interface UserRepository extends JpaRepository<Users, Integer> {
+public interface UserRepository extends JpaRepository<Users, Long> {
 
     /**
      * Custom method to find a user by their username.

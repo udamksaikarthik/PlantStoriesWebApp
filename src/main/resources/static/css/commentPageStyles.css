@@ -1,0 +1,17 @@
+.reactions label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.reactions .emoji-text {
+    font-weight: bold; /* Bold for emoji and initial text */
+    margin-right: 5px;
+}
+
+.reactions .description-text {
+    font-weight: normal; /* Regular for the description */
+    color: #555; /* Optional: Subtle color for description */
+}

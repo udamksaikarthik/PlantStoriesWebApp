@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.dissertationproject.plant_stories.model.Posts;
 
 @Repository
-public interface PostRepository extends JpaRepository<Posts, Integer>{
+public interface PostRepository extends JpaRepository<Posts, Long>{
 
 }

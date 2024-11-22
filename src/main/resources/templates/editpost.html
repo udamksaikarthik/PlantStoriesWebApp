@@ -7,6 +7,7 @@
     <link rel="stylesheet" th:href="@{/css/styles.css}">
     <link rel="stylesheet" th:href="@{/css/homepageStyles.css}">
     <link rel="stylesheet" th:href="@{/css/addPostsStyles.css}">
+    <link rel="stylesheet" th:href="@{/css/editPost.css}">
 </head>
 <body>
 	<div class="header-container">
@@ -51,11 +52,13 @@
 			<a href="/ask4help">Ask4Help</a>
 		</div>
 		<div class="feed_container">
-			 <h1>Create a New Post</h1>
+			 <h1>Edit Post</h1>
         <p class="disclaimer">Share as much or as little as you like – your story is yours to tell.</p>
 
         <!-- Form starts here -->
-        <form th:action="@{/posts/create}" th:object="${post}" method="post" enctype="multipart/form-data">
+        <form th:action="@{/editThisPost}" th:object="${post}" method="post" enctype="multipart/form-data">
+        	
+    		<input type="hidden" name="postId" th:value="${post.postId}">
             <!-- Post Title -->
             <label for="postTitle">
                 Post Title <span style="color: red;">*</span>:
@@ -107,19 +110,45 @@
             </label>
             <textarea id="previousStoryAchievements" name="previousStoryAchievements" th:field="*{previousStoryAchievements}" rows="3"></textarea>
             
+            <!-- Media Section -->
+            <div class="post-media">
+            	<p class="error">Clicking the 'X' button on an image or video will permanently delete the selected media from your post. This action cannot be undone, even if you do not click the 'Edit Post' button.</p>
+			    <div class="media-container" th:each="media : ${post.mediaList}">
+			        <!-- Image Preview -->
+			        <img th:if="${media.mediaType.startsWith('image')}" 
+			             th:src="${media.base64MediaData}" 
+					     th:loading="lazy"
+			             alt="Post Media" 
+			             class="media-preview" 
+			             onclick="showMediaFullscreen(this)">
+			             
+			        <!-- Video Preview -->
+			        <video th:if="${media.mediaType.startsWith('video')}" 
+					       class="media-preview-video" 
+					       controls 
+					       preload="metadata" 
+					       th:loading="lazy"
+					       onclick="showVideoFullscreen(this)">
+					    <source th:src="${media.base64MediaData}" th:type="${media.mediaType}">
+					</video>
+					
+					<a class="delete_media_btn_class" th:href="@{/deleteMedia(mediaId=${media.id}, postId=${post.postId})}">X</a>
+
+			    </div>
+			</div>
+					
             <!-- Media Upload -->
-            <label for="mediaData">Upload Media (Images/Videos):</label>
-            <input type="file" id="mediaData" name="mediaData" th:field="*{mediaData}" multiple accept="image/*,video/*" onchange="validateFileSize(this), validateFileCount(this), previewMedia()" />
+            <label for="mediaData">Upload Extra Media (Images/Videos):</label>
+            <input type="file" id="mediaData" name="mediaData" multiple accept="image/*,video/*" onchange="validateFileSize(this), validateFileCount(this), previewMedia()" />
 			
 			<!-- Display a message if the file count exceeds the limit -->
 			<p id="fileCountError" style="color: red; display: none;">You can only upload up to 5 files.</p>
-			<p class="error" th:if="${#fields.hasErrors('mediaData')}" th:errors="*{mediaData}"></p>
 						
             <!-- Media Preview Section -->
             <div class="preview-container" id="preview-container"></div>
 
             <!-- Submit Button -->
-            <button class="createPostBtn" type="submit">Create Post</button>
+            <button class="createPostBtn" type="submit">Edit Post</button>
         </form>
 		</div>
 	</div>
@@ -132,5 +161,6 @@
     
     <script type="text/javascript" th:src="@{/js/home.js}"></script>
     <script type="text/javascript" th:src="@{/js/addPost.js}"></script>
+    <script type="text/javascript" th:src="@{/js/editpost.js}"></script>
 </body>
 </html>

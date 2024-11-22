@@ -13,6 +13,8 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public class Posts {
 
+	
+	private Long postId;
     /**
      * Title of the post.
      * This field is mandatory and must not exceed 255 characters.
@@ -207,6 +209,14 @@ public class Posts {
 		this.previousStoryAchievements = previousStoryAchievements;
 	}
 
+	
+	public Long getPostId() {
+		return postId;
+	}
+
+	public void setPostId(Long postId) {
+		this.postId = postId;
+	}
 
 	/**
      * Overrides the toString method for debugging and logging purposes.

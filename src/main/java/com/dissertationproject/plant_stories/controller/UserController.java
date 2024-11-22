@@ -1,15 +1,24 @@
 package com.dissertationproject.plant_stories.controller;
 
+import java.util.ArrayList;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.dissertationproject.plant_stories.bean.FeedPostMediaDTO;
 import com.dissertationproject.plant_stories.bean.Users;
+import com.dissertationproject.plant_stories.dao.UserRepository;
+import com.dissertationproject.plant_stories.service.HomeServiceImpl;
 import com.dissertationproject.plant_stories.service.UserServiceImpl;
 
 import jakarta.validation.Valid;
@@ -19,6 +28,13 @@ public class UserController {
 	
 	@Autowired
 	private UserServiceImpl userServiceImpl;
+
+	@Autowired
+	private UserRepository userRepository;
+	
+
+	@Autowired
+	private HomeServiceImpl homeServiceImpl;;
 	
 	@GetMapping("/login")
 	private ModelAndView showLoginPage() {
@@ -82,5 +98,50 @@ public class UserController {
         return "redirect:/login";
     }
 	
+	@GetMapping("/profile")
+	public ModelAndView showUserProfile() {
+		ModelAndView mv = new ModelAndView();
+		// Get the logged-in user's email (username in this case)
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();  // Get the logged-in user's email
+
+        // Fetch the user entity from the database using the email
+        com.dissertationproject.plant_stories.model.Users user = userRepository.findByUsername(username);
+        
+        Long userId = 0L;
+        // Add the first name, last name, and role to the model
+        if (user != null) {
+            mv.addObject("userName", user.getUsername());
+            userId = user.getId();
+            mv.addObject("userBio", user.getBio());
+        }
+
+        ArrayList<FeedPostMediaDTO> feedPosts = homeServiceImpl.getAllPosts(userId);
+        mv.addObject("feedPosts", feedPosts);
+		mv.setViewName("profile.html");
+		return mv;
+	}
+
+	@GetMapping("/showThisUserProfile")
+	public ModelAndView showThisUserProfile(@RequestParam("userId") Long userId) {
+		ModelAndView mv = new ModelAndView();
+		// Get the logged-in user's email (username in this case)
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();  // Get the logged-in user's email
+
+        // Fetch the user entity from the database using the email
+        Optional<com.dissertationproject.plant_stories.model.Users> user = userRepository.findById(userId);
+      
+        if(user.isPresent()) {
+        	com.dissertationproject.plant_stories.model.Users existingUser = user.get();
+            mv.addObject("selectedUsername", existingUser.getUsername());
+            mv.addObject("userBio", existingUser.getBio());
+        }
+        mv.addObject("userName", username);
+        ArrayList<FeedPostMediaDTO> feedPosts = homeServiceImpl.getAllPosts(userId);
+        mv.addObject("feedPosts", feedPosts);
+		mv.setViewName("selecteduserprofile.html");
+		return mv;
+	}
 }
 
