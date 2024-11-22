@@ -50,23 +50,26 @@ public class HomeService implements HomeServiceImpl{
 	        if (mediaFiles != null && !mediaFiles.isEmpty()) {
 	        	System.out.println("mediaFiles Size: "+mediaFiles.size());
 	            for (MultipartFile file : mediaFiles) {
-	    			MediaPost mediaPost = new MediaPost();
-	                // Process the media file (e.g., save to database or file system)
-	                byte[] fileData = null;
-					try {
-						fileData = file.getBytes();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-	                String fileName = file.getOriginalFilename();
-	                String contentType = file.getContentType();
-	                
-	                mediaPost.setMediaData(fileData);
-	                mediaPost.setFileName(fileName);
-	                mediaPost.setMediaType(contentType);
-	                mediaPost.setUserId(userId);
-	                mediaPosts.add(mediaPost);
+		        	System.out.println("File Size: "+file.getSize());
+	            	if(file.getSize()>0) {
+	            		MediaPost mediaPost = new MediaPost();
+		                // Process the media file (e.g., save to database or file system)
+		                byte[] fileData = null;
+						try {
+							fileData = file.getBytes();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+		                String fileName = file.getOriginalFilename();
+		                String contentType = file.getContentType();
+		                
+		                mediaPost.setMediaData(fileData);
+		                mediaPost.setFileName(fileName);
+		                mediaPost.setMediaType(contentType);
+		                mediaPost.setUserId(userId);
+		                mediaPosts.add(mediaPost);
+	            	}
 	            }
 	        }
 		}
@@ -80,7 +83,9 @@ public class HomeService implements HomeServiceImpl{
 
 		com.dissertationproject.plant_stories.model.Posts postEntity = new com.dissertationproject.plant_stories.model.Posts();
 		if(post!=null) {
-	                
+	                if(post.getPostId()!=null) {
+			        	postEntity.setId(post.getPostId());
+	                }
 		        	postEntity.setPostTitle(post.getPostTitle());
 		        	postEntity.setPostDescription(post.getPostDescription());
 		        	postEntity.setCareRoutine(post.getCareRoutine());
@@ -156,6 +161,13 @@ public class HomeService implements HomeServiceImpl{
 	public FeedPostMediaDTO getPost(Long postId) {
 		// TODO Auto-generated method stub
 		return homeDao.getPost(postId);
+	}
+
+
+	@Override
+	public void deleteMedia(Long mediaId) {
+		// TODO Auto-generated method stub
+		homeDao.deleteMedia(mediaId);
 	}
 
 

@@ -95,3 +95,25 @@ function toggleComments(postId) {
         commentContainer.style.display = "none";
     }
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    const lazyVideos = document.querySelectorAll("video[loading='lazy']");
+
+    if ("IntersectionObserver" in window) {
+        const videoObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const video = entry.target;
+                    const source = video.querySelector("source");
+                    if (source && !source.src) {
+                        source.src = video.dataset.src;
+                        video.load();
+                    }
+                    observer.unobserve(video);
+                }
+            });
+        });
+
+        lazyVideos.forEach(video => videoObserver.observe(video));
+    }
+});

@@ -306,5 +306,11 @@ public class HomeDao {
 	}
 
 
+	public void deleteMedia(Long mediaId) {
+		// TODO Auto-generated method stub
+		mediaPostsRepository.deleteById(mediaId);
+	}
+
+
 
 }

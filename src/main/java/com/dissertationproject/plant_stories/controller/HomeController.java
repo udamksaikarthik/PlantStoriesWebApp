@@ -1,5 +1,6 @@
 package com.dissertationproject.plant_stories.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -199,6 +201,80 @@ public class HomeController {
         
 		mv.addObject("userName", user.getUsername());
 		mv.setViewName("redirect:/profile");
+		return mv;
+	}
+	
+	@GetMapping("/showEditPost")
+	public ModelAndView showEditPost(@RequestParam("postId") Long postId) {
+		System.out.println("Inside showEditPost method");
+		System.out.println("postId: "+ postId);
+		ModelAndView mv = new ModelAndView();
+        FeedPostMediaDTO post = homeServiceImpl.getThisPostInfo(postId);
+        System.out.println("post: "+post.toString());
+		// Get the logged-in user's email (username in this case)
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();  // Get the logged-in user's email
+
+        // Fetch the user entity from the database using the email
+        Users user = userRepository.findByUsername(username);
+        System.out.println("userID:"+ user.getId());
+        
+        mv.addObject("post", post);
+		mv.addObject("userName", user.getUsername());
+		mv.setViewName("editpost.html");
+		return mv;
+	}
+
+	@GetMapping("/deleteMedia")
+	public ModelAndView deleteMedia(@RequestParam("mediaId") Long mediaId, @RequestParam("postId") Long postId) {
+		System.out.println("Inside deleteMedia method");
+		ModelAndView mv = new ModelAndView();
+        homeServiceImpl.deleteMedia(mediaId);
+        
+		mv.setViewName("redirect:/showEditPost?postId=" + postId);
+		return mv;
+	}
+	
+	@PostMapping("/editThisPost")
+	public ModelAndView editThisPost(@Valid @ModelAttribute("post") FeedPostMediaDTO feedPost,
+			@RequestParam("mediaData") ArrayList<MultipartFile> mediaData,
+			@RequestParam("postId") Long postId) throws IOException {
+		System.out.println("Inside editThisPost method");
+		ModelAndView mv = new ModelAndView();
+		
+		// Get the logged-in user's email (username in this case)
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();  // Get the logged-in user's email
+
+        // Fetch the user entity from the database using the email
+        Users user = userRepository.findByUsername(username);
+        System.out.println("userID:"+ user.getId());
+        
+		
+		Posts post = new Posts();
+		post.setPostId(postId);
+		post.setCareRoutine(feedPost.getCareRoutine());
+		if(mediaData!=null) {
+			System.out.println("mediaData size: "+mediaData.size());
+			if(mediaData.size()>0) {
+				for (MultipartFile multipartFile : mediaData) {
+					System.out.println("multipartFile.getSize(): "+multipartFile.getSize()); 
+					if(multipartFile.getSize()>0) {
+						post.setMediaData(mediaData);
+					}
+				}
+			}
+		}
+		post.setMood(feedPost.getMood());
+		post.setPostDescription(feedPost.getPostDescription());
+		post.setPostTitle(feedPost.getPostTitle());
+		post.setPreviousStoryAchievements(feedPost.getPreviousStoryAchievements());
+		post.setReflection(feedPost.getReflection());
+		post.setWeather(feedPost.getWeather());
+		
+
+        homeServiceImpl.createPost(user.getId(), post);
+		mv.setViewName("redirect:/showEditPost?postId=" + postId);
 		return mv;
 	}
 }

@@ -24,5 +24,7 @@ public interface HomeServiceImpl {
 
 	FeedPostMediaDTO getPost(Long postId);
 
+	void deleteMedia(Long mediaId);
+
 
 }

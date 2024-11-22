@@ -100,18 +100,20 @@
 					        <!-- Image Preview -->
 					        <img th:if="${media.mediaType.startsWith('image')}" 
 					             th:src="${media.base64MediaData}" 
+							     th:loading="lazy"
 					             alt="Post Media" 
 					             class="media-preview" 
 					             onclick="showMediaFullscreen(this)">
 					             
 					        <!-- Video Preview -->
 					        <video th:if="${media.mediaType.startsWith('video')}" 
-					               class="media-preview-video" 
-					               controls 
-					               onclick="showVideoFullscreen(this)">
-					            <source th:src="${media.base64MediaData}" th:type="${media.mediaType}">
-					            
-					        </video>
+							       class="media-preview-video" 
+							       controls 
+							       preload="metadata" 
+							       th:loading="lazy"
+							       onclick="showVideoFullscreen(this)">
+							    <source th:src="${media.base64MediaData}" th:type="${media.mediaType}">
+							</video>
 					    </div>
 					</div>
 		            <!-- Post Actions -->

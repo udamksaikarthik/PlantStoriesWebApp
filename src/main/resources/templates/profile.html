@@ -136,7 +136,7 @@
 		            <!-- Post Actions -->
 		            <div class="post-actions">
 		                <button class="action-button"
-						        th:onclick="'location.href=\'/editPost?postId=' + ${post.postId} + '\''">
+						        th:onclick="'location.href=\'/showEditPost?postId=' + ${post.postId} + '\''">
 						    Edit Post
 						</button>
 						<form th:action="@{/deletePost}" method=post>
