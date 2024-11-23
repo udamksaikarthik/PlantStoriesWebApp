@@ -2,6 +2,8 @@ package com.dissertationproject.plant_stories.service;
 
 import java.util.ArrayList;
 
+import org.springframework.data.domain.Page;
+
 import com.dissertationproject.plant_stories.bean.CommentForm;
 import com.dissertationproject.plant_stories.bean.FeedPostMediaDTO;
 import com.dissertationproject.plant_stories.bean.Posts;
@@ -12,7 +14,7 @@ public interface HomeServiceImpl {
 
 	void createPost(Long userId, @Valid Posts post);
 
-	ArrayList<FeedPostMediaDTO> getAllPosts();
+	ArrayList<FeedPostMediaDTO> getAllPosts(int page, int pageSize);
 
 	FeedPostMediaDTO getThisPostInfo(Long postId);
 
@@ -25,6 +27,8 @@ public interface HomeServiceImpl {
 	FeedPostMediaDTO getPost(Long postId);
 
 	void deleteMedia(Long mediaId);
+
+	int getTotalNoOfPosts();
 
 
 }

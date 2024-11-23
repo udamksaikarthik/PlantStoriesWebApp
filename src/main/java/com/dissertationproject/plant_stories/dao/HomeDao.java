@@ -16,6 +16,11 @@ import com.dissertationproject.plant_stories.model.MediaPost;
 import com.dissertationproject.plant_stories.model.Posts;
 import com.dissertationproject.plant_stories.model.Users;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+
 @Repository
 public class HomeDao {
 	
@@ -45,12 +50,13 @@ public class HomeDao {
 	}
 
 
-	public ArrayList<FeedPostMediaDTO> getAllPosts() {
+	public ArrayList<FeedPostMediaDTO> getAllPosts(int page, int size) {
 		// TODO Auto-generated method stub
+		
+		Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdDate"));
 		ArrayList<FeedPostMediaDTO> feedPosts = new ArrayList<>();
 		
-		ArrayList<Posts> allPosts = (ArrayList<Posts>) postRepository.findAll().stream()
-			    .sorted(Comparator.comparing(Posts::getCreatedDate).reversed()) // Descending order by createdDate
+		ArrayList<Posts> allPosts = (ArrayList<Posts>) postRepository.findAll(pageable).stream()
 			    .collect(Collectors.toCollection(ArrayList::new));
 		
 		if(allPosts!=null) {
@@ -309,6 +315,13 @@ public class HomeDao {
 	public void deleteMedia(Long mediaId) {
 		// TODO Auto-generated method stub
 		mediaPostsRepository.deleteById(mediaId);
+	}
+
+
+	public int getTotalNoOfPosts() {
+		// TODO Auto-generated method stub
+		int totalNoOfPosts = (int) postRepository.count();
+		return totalNoOfPosts;
 	}
 
 

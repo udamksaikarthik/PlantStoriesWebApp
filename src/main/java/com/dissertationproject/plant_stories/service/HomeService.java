@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -36,9 +37,9 @@ public class HomeService implements HomeServiceImpl{
 
 
 	@Override
-	public ArrayList<FeedPostMediaDTO> getAllPosts() {
+	public ArrayList<FeedPostMediaDTO> getAllPosts(int page, int pageSize) {
 		// TODO Auto-generated method stub
-		return homeDao.getAllPosts();
+		return homeDao.getAllPosts(page, pageSize);
 	}
 	
 	private ArrayList<MediaPost> getAllEntriesOfMedia(Long userId, @Valid Posts post) {
@@ -168,6 +169,21 @@ public class HomeService implements HomeServiceImpl{
 	public void deleteMedia(Long mediaId) {
 		// TODO Auto-generated method stub
 		homeDao.deleteMedia(mediaId);
+	}
+
+
+	@Override
+	public int getTotalNoOfPosts() {
+		// TODO Auto-generated method stub
+		
+		int totalPages = homeDao.getTotalNoOfPosts();
+		if(totalPages>5) {
+			totalPages = (totalPages + 5 - 1)/5;
+		}else {
+			totalPages  = 1;
+		}
+		System.out.println("totalPages: "+totalPages);
+		return totalPages;
 	}
 
 

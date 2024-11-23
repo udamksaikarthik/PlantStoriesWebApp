@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -41,8 +42,11 @@ public class HomeController {
 	private HomeServiceImpl homeServiceImpl;;
 	
 	@GetMapping("/")
-	private ModelAndView showHomePage() {
+	private ModelAndView showHomePage(@RequestParam(defaultValue = "0") int page) {
         System.out.println("Inside showHomePage method");
+        
+        int pageSize = 5; // Show 5 posts per page
+        
 		ModelAndView mv = new ModelAndView();
 		// Get the logged-in user's email (username in this case)
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -55,9 +59,14 @@ public class HomeController {
         if (user != null) {
             mv.addObject("userName", user.getUsername());
         }
-
-        ArrayList<FeedPostMediaDTO> feedPosts = homeServiceImpl.getAllPosts();
+        
+        int totalNoOfPages = homeServiceImpl.getTotalNoOfPosts();
+        
+        
+        ArrayList<FeedPostMediaDTO> feedPosts = homeServiceImpl.getAllPosts(page, pageSize);
         mv.addObject("feedPosts", feedPosts);
+        mv.addObject("currentPage", page);
+        mv.addObject("totalPages", totalNoOfPages);
 		mv.setViewName("home.html");
 		return mv;
 	}

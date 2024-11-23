@@ -89,7 +89,7 @@
 						        <span class="subheading">Weather:</span> <span class="content" th:text="${post.weather}"></span>
 						    </p>
 						    <p th:if="${post.previousStoryAchievements != null and !#strings.isEmpty(post.previousStoryAchievements)}">
-						        <span class="subheading">Achievements:</span> <span class="content" th:text="${post.previousStoryAchievements}"></span>
+						        <span class="subheading">Previous Achievements:</span> <span class="content" th:text="${post.previousStoryAchievements}"></span>
 						    </p>
 						</div>
 
@@ -159,6 +159,20 @@
         			
         			
 		        </div>
+		        
+		        <!-- Pagination Controls -->
+				<div class="pagination">
+				    <button th:if="${currentPage != null and totalPages != null and currentPage > 0}" 
+				            th:onclick="'location.href=\'/?page=' + (${currentPage} - 1) + '\''">
+				        Previous
+				    </button>
+				    <span th:if="${currentPage != null and totalPages != null}" 
+				          th:text="'Page ' + (${currentPage} + 1) + ' of ' + ${totalPages}">Page 1 of 1</span>
+				    <button th:if="${currentPage != null and totalPages != null and currentPage < totalPages - 1}" 
+				            th:onclick="'location.href=\'/?page=' + (${currentPage} + 1) + '\''">
+				        Next
+				    </button>
+				</div>
 		    </div>
 		
 		    <!-- Full-Screen Media Modal -->
@@ -167,7 +181,7 @@
 			    <video id="modal-video" class="modal-content" controls style="display: none;"></video>
 			</div>
 		</div>
-	
+			
 	
     <script type="text/javascript" th:src="@{/js/home.js}"></script>
 </body>
