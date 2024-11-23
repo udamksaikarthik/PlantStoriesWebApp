@@ -30,7 +30,7 @@ public interface HomeServiceImpl {
 
 	int getTotalNoOfPosts(Long userId, int pageSize);
 
-	int getTotalNoOfPosts();
+	int getTotalNoOfPosts(int pageSize);
 
 
 }

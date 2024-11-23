@@ -45,7 +45,7 @@ public class HomeController {
 	private ModelAndView showHomePage(@RequestParam(defaultValue = "0") int page) {
         System.out.println("Inside showHomePage method");
         
-        int pageSize = 5; // Show 5 posts per page
+        int pageSize = 3; // Show 3 posts per page
         
 		ModelAndView mv = new ModelAndView();
 		// Get the logged-in user's email (username in this case)
@@ -60,7 +60,7 @@ public class HomeController {
             mv.addObject("userName", user.getUsername());
         }
         
-        int totalNoOfPages = homeServiceImpl.getTotalNoOfPosts();
+        int totalNoOfPages = homeServiceImpl.getTotalNoOfPosts(pageSize);
         
         
         ArrayList<FeedPostMediaDTO> feedPosts = homeServiceImpl.getAllPosts(page, pageSize);

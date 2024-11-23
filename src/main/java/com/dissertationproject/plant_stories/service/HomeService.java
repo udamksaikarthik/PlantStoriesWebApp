@@ -173,12 +173,12 @@ public class HomeService implements HomeServiceImpl{
 
 
 	@Override
-	public int getTotalNoOfPosts() {
+	public int getTotalNoOfPosts(int pageSize) {
 		// TODO Auto-generated method stub
 		
 		int totalPages = homeDao.getTotalNoOfPosts();
-		if(totalPages>5) {
-			totalPages = (totalPages + 5 - 1)/5;
+		if(totalPages>pageSize) {
+			totalPages = (totalPages + pageSize - 1)/pageSize;
 		}else {
 			totalPages  = 1;
 		}
