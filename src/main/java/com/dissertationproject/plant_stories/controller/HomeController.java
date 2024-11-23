@@ -247,10 +247,17 @@ public class HomeController {
 	@PostMapping("/editThisPost")
 	public ModelAndView editThisPost(@Valid @ModelAttribute("post") FeedPostMediaDTO feedPost,
 			@RequestParam("mediaData") ArrayList<MultipartFile> mediaData,
-			@RequestParam("postId") Long postId) throws IOException {
+			@RequestParam("postId") Long postId,
+			@RequestParam("totalMediaCount") int totalMediaCount,
+			RedirectAttributes redirectAttributes) throws IOException {
 		System.out.println("Inside editThisPost method");
 		ModelAndView mv = new ModelAndView();
 		
+		if(totalMediaCount>5) {
+			redirectAttributes.addFlashAttribute("mediaErrorMsg","Not more than 5 media(Images/Videos) files can be uploaded per post.");
+			mv.setViewName("redirect:/showEditPost?postId=" + postId);
+			return mv;
+		}
 		// Get the logged-in user's email (username in this case)
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();  // Get the logged-in user's email

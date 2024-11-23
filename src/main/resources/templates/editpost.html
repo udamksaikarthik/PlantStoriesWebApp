@@ -54,9 +54,13 @@
 		<div class="feed_container">
 			 <h1>Edit Post</h1>
         <p class="disclaimer">Share as much or as little as you like – your story is yours to tell.</p>
-
+		
+		<p style="color: red;" th:text="${mediaErrorMsg}"></p>
+		
         <!-- Form starts here -->
         <form th:action="@{/editThisPost}" th:object="${post}" method="post" enctype="multipart/form-data">
+        	
+        	<input type="hidden" id="totalMediaCount" name="totalMediaCount" value="0" />
         	
     		<input type="hidden" name="postId" th:value="${post.postId}">
             <!-- Post Title -->
@@ -132,7 +136,7 @@
 					    <source th:src="${media.base64MediaData}" th:type="${media.mediaType}">
 					</video>
 					
-					<a class="delete_media_btn_class" th:href="@{/deleteMedia(mediaId=${media.id}, postId=${post.postId})}">X</a>
+					<a class="delete_media_btn_class" th:href="@{/deleteMedia(mediaId=${media.id}, postId=${post.postId})}" onclick="updateTotalMediaCount()">X</a>
 
 			    </div>
 			</div>
@@ -143,12 +147,13 @@
 			
 			<!-- Display a message if the file count exceeds the limit -->
 			<p id="fileCountError" style="color: red; display: none;">You can only upload up to 5 files.</p>
-						
+			<p style="color: red;" th:text="${mediaErrorMsg}"></p>
+				
             <!-- Media Preview Section -->
             <div class="preview-container" id="preview-container"></div>
 
             <!-- Submit Button -->
-            <button class="createPostBtn" type="submit">Edit Post</button>
+            <button class="createPostBtn" type="submit" onclick="updateTotalMediaCount()">Edit Post</button>
         </form>
 		</div>
 	</div>
