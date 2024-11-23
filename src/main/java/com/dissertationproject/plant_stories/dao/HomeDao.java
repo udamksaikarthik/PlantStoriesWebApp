@@ -170,17 +170,16 @@ public class HomeDao {
 	}
 
 
-	public ArrayList<FeedPostMediaDTO> getAllPosts(Long userId) {
+	public ArrayList<FeedPostMediaDTO> getAllPosts(Long userId, int page, int size) {
 		// TODO Auto-generated method stub
 				ArrayList<FeedPostMediaDTO> feedPosts = new ArrayList<>();
-				
-				ArrayList<Posts> allPosts = (ArrayList<Posts>) postRepository.findAll().stream()
-					    .sorted(Comparator.comparing(Posts::getCreatedDate).reversed()) // Descending order by createdDate
+
+				Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdDate"));
+				ArrayList<Posts> allPosts = (ArrayList<Posts>) postRepository.findAllByUserId(userId, pageable).stream()
 					    .collect(Collectors.toCollection(ArrayList::new));
 				
 				if(allPosts!=null) {
 					for (Posts post : allPosts) {
-						if(post.getUserId() == userId) {
 							Optional<Users> user = userRepository.findById(post.getUserId());
 							FeedPostMediaDTO feedPost = new FeedPostMediaDTO();
 							feedPost.setPostId(post.getId());
@@ -231,7 +230,6 @@ public class HomeDao {
 							}
 							System.out.println("feedPost toString: "+feedPost.toString());
 							feedPosts.add(feedPost);
-						}
 					}
 				}
 				return feedPosts;
@@ -321,6 +319,13 @@ public class HomeDao {
 	public int getTotalNoOfPosts() {
 		// TODO Auto-generated method stub
 		int totalNoOfPosts = (int) postRepository.count();
+		return totalNoOfPosts;
+	}
+
+
+	public int getTotalNoOfPosts(Long userId) {
+		// TODO Auto-generated method stub
+		int totalNoOfPosts = (int) postRepository.countById(userId);
 		return totalNoOfPosts;
 	}
 

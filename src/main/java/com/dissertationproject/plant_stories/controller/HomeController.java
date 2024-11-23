@@ -39,7 +39,7 @@ public class HomeController {
 	private UserServiceImpl userServiceImpl;
 
 	@Autowired
-	private HomeServiceImpl homeServiceImpl;;
+	private HomeServiceImpl homeServiceImpl;
 	
 	@GetMapping("/")
 	private ModelAndView showHomePage(@RequestParam(defaultValue = "0") int page) {

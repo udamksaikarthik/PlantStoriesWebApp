@@ -133,9 +133,9 @@ public class HomeService implements HomeServiceImpl{
 
 
 	@Override
-	public ArrayList<FeedPostMediaDTO> getAllPosts(Long userId) {
+	public ArrayList<FeedPostMediaDTO> getAllPosts(Long userId, int page, int size) {
 		// TODO Auto-generated method stub
-		return homeDao.getAllPosts(userId);
+		return homeDao.getAllPosts(userId, page, size);
 	}
 
 
@@ -185,6 +185,24 @@ public class HomeService implements HomeServiceImpl{
 		System.out.println("totalPages: "+totalPages);
 		return totalPages;
 	}
+
+
+	@Override
+	public int getTotalNoOfPosts(Long userId, int pageSize) {
+
+		int totalPages = homeDao.getTotalNoOfPosts(userId);
+		
+		System.out.println("getTotalNoOfPosts(userId): "+totalPages);
+		
+		if(totalPages>pageSize) {
+			totalPages = (totalPages + pageSize - 1)/pageSize;
+		}else {
+			totalPages  = 1;
+		}
+		System.out.println("totalPages: "+totalPages);
+		return totalPages;
+	}
+
 
 
 

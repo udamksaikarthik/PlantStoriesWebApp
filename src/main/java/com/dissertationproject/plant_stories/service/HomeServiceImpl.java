@@ -20,13 +20,15 @@ public interface HomeServiceImpl {
 
 	void addComment(CommentForm commentForm, Long postId, Long id, String username);
 
-	ArrayList<FeedPostMediaDTO> getAllPosts(Long userId);
+	ArrayList<FeedPostMediaDTO> getAllPosts(Long userId, int page, int pageSize);
 
 	void deletePost(FeedPostMediaDTO feedPostMediaDTO);
 
 	FeedPostMediaDTO getPost(Long postId);
 
 	void deleteMedia(Long mediaId);
+
+	int getTotalNoOfPosts(Long userId, int pageSize);
 
 	int getTotalNoOfPosts();
 
