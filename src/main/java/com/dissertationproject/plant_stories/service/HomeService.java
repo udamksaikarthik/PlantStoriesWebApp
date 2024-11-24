@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -36,9 +37,9 @@ public class HomeService implements HomeServiceImpl{
 
 
 	@Override
-	public ArrayList<FeedPostMediaDTO> getAllPosts() {
+	public ArrayList<FeedPostMediaDTO> getAllPosts(int page, int pageSize) {
 		// TODO Auto-generated method stub
-		return homeDao.getAllPosts();
+		return homeDao.getAllPosts(page, pageSize);
 	}
 	
 	private ArrayList<MediaPost> getAllEntriesOfMedia(Long userId, @Valid Posts post) {
@@ -132,9 +133,9 @@ public class HomeService implements HomeServiceImpl{
 
 
 	@Override
-	public ArrayList<FeedPostMediaDTO> getAllPosts(Long userId) {
+	public ArrayList<FeedPostMediaDTO> getAllPosts(Long userId, int page, int size) {
 		// TODO Auto-generated method stub
-		return homeDao.getAllPosts(userId);
+		return homeDao.getAllPosts(userId, page, size);
 	}
 
 
@@ -169,6 +170,39 @@ public class HomeService implements HomeServiceImpl{
 		// TODO Auto-generated method stub
 		homeDao.deleteMedia(mediaId);
 	}
+
+
+	@Override
+	public int getTotalNoOfPosts(int pageSize) {
+		// TODO Auto-generated method stub
+		
+		int totalPages = homeDao.getTotalNoOfPosts();
+		if(totalPages>pageSize) {
+			totalPages = (totalPages + pageSize - 1)/pageSize;
+		}else {
+			totalPages  = 1;
+		}
+		System.out.println("totalPages: "+totalPages);
+		return totalPages;
+	}
+
+
+	@Override
+	public int getTotalNoOfPosts(Long userId, int pageSize) {
+
+		int totalPages = homeDao.getTotalNoOfPosts(userId);
+		
+		System.out.println("getTotalNoOfPosts(userId): "+totalPages);
+		
+		if(totalPages>pageSize) {
+			totalPages = (totalPages + pageSize - 1)/pageSize;
+		}else {
+			totalPages  = 1;
+		}
+		System.out.println("totalPages: "+totalPages);
+		return totalPages;
+	}
+
 
 
 

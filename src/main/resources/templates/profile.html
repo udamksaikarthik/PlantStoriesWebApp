@@ -172,6 +172,20 @@
         			
         			
 		        </div>
+		        
+		        <!-- Pagination Controls -->
+				<div class="pagination">
+				    <button th:if="${currentPage != null and totalPages != null and currentPage > 0}" 
+				            th:onclick="'location.href=\'/profile?page=' + (${currentPage} - 1) + '\''">
+				        Previous
+				    </button>
+				    <span th:if="${currentPage != null and totalPages != null}" 
+				          th:text="'Page ' + (${currentPage} + 1) + ' of ' + ${totalPages}">Page 1 of 1</span>
+				    <button th:if="${currentPage != null and totalPages != null and currentPage < totalPages - 1}" 
+				            th:onclick="'location.href=\'/profile?page=' + (${currentPage} + 1) + '\''">
+				        Next
+				    </button>
+				</div>
         </div>
 	    </div>
 		

@@ -16,6 +16,11 @@ import com.dissertationproject.plant_stories.model.MediaPost;
 import com.dissertationproject.plant_stories.model.Posts;
 import com.dissertationproject.plant_stories.model.Users;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+
 @Repository
 public class HomeDao {
 	
@@ -45,12 +50,13 @@ public class HomeDao {
 	}
 
 
-	public ArrayList<FeedPostMediaDTO> getAllPosts() {
+	public ArrayList<FeedPostMediaDTO> getAllPosts(int page, int size) {
 		// TODO Auto-generated method stub
+		
+		Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdDate"));
 		ArrayList<FeedPostMediaDTO> feedPosts = new ArrayList<>();
 		
-		ArrayList<Posts> allPosts = (ArrayList<Posts>) postRepository.findAll().stream()
-			    .sorted(Comparator.comparing(Posts::getCreatedDate).reversed()) // Descending order by createdDate
+		ArrayList<Posts> allPosts = (ArrayList<Posts>) postRepository.findAll(pageable).stream()
 			    .collect(Collectors.toCollection(ArrayList::new));
 		
 		if(allPosts!=null) {
@@ -164,17 +170,16 @@ public class HomeDao {
 	}
 
 
-	public ArrayList<FeedPostMediaDTO> getAllPosts(Long userId) {
+	public ArrayList<FeedPostMediaDTO> getAllPosts(Long userId, int page, int size) {
 		// TODO Auto-generated method stub
 				ArrayList<FeedPostMediaDTO> feedPosts = new ArrayList<>();
-				
-				ArrayList<Posts> allPosts = (ArrayList<Posts>) postRepository.findAll().stream()
-					    .sorted(Comparator.comparing(Posts::getCreatedDate).reversed()) // Descending order by createdDate
+
+				Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdDate"));
+				ArrayList<Posts> allPosts = (ArrayList<Posts>) postRepository.findAllByUserId(userId, pageable).stream()
 					    .collect(Collectors.toCollection(ArrayList::new));
 				
 				if(allPosts!=null) {
 					for (Posts post : allPosts) {
-						if(post.getUserId() == userId) {
 							Optional<Users> user = userRepository.findById(post.getUserId());
 							FeedPostMediaDTO feedPost = new FeedPostMediaDTO();
 							feedPost.setPostId(post.getId());
@@ -225,7 +230,6 @@ public class HomeDao {
 							}
 							System.out.println("feedPost toString: "+feedPost.toString());
 							feedPosts.add(feedPost);
-						}
 					}
 				}
 				return feedPosts;
@@ -309,6 +313,20 @@ public class HomeDao {
 	public void deleteMedia(Long mediaId) {
 		// TODO Auto-generated method stub
 		mediaPostsRepository.deleteById(mediaId);
+	}
+
+
+	public int getTotalNoOfPosts() {
+		// TODO Auto-generated method stub
+		int totalNoOfPosts = (int) postRepository.count();
+		return totalNoOfPosts;
+	}
+
+
+	public int getTotalNoOfPosts(Long userId) {
+		// TODO Auto-generated method stub
+		int totalNoOfPosts = (int) postRepository.countById(userId);
+		return totalNoOfPosts;
 	}
 
 

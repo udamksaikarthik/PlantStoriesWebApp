@@ -99,7 +99,13 @@ public class UserController {
     }
 	
 	@GetMapping("/profile")
-	public ModelAndView showUserProfile() {
+	public ModelAndView showUserProfile(@RequestParam(defaultValue = "0") int page) {
+		
+
+        int pageSize = 3; // Show 3 posts per page
+        
+
+        
 		ModelAndView mv = new ModelAndView();
 		// Get the logged-in user's email (username in this case)
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -115,15 +121,25 @@ public class UserController {
             userId = user.getId();
             mv.addObject("userBio", user.getBio());
         }
+        
 
-        ArrayList<FeedPostMediaDTO> feedPosts = homeServiceImpl.getAllPosts(userId);
+        int totalNoOfPages = homeServiceImpl.getTotalNoOfPosts(userId, pageSize);
+        
+        ArrayList<FeedPostMediaDTO> feedPosts = homeServiceImpl.getAllPosts(userId, page, pageSize);
         mv.addObject("feedPosts", feedPosts);
+        mv.addObject("currentPage", page);
+        mv.addObject("totalPages", totalNoOfPages);
 		mv.setViewName("profile.html");
 		return mv;
 	}
 
 	@GetMapping("/showThisUserProfile")
-	public ModelAndView showThisUserProfile(@RequestParam("userId") Long userId) {
+	public ModelAndView showThisUserProfile(@RequestParam("userId") Long userId,
+			@RequestParam(defaultValue = "0") int page) {
+		
+
+        int pageSize = 3; // Show 3 posts per page
+        
 		ModelAndView mv = new ModelAndView();
 		// Get the logged-in user's email (username in this case)
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -138,8 +154,15 @@ public class UserController {
             mv.addObject("userBio", existingUser.getBio());
         }
         mv.addObject("userName", username);
-        ArrayList<FeedPostMediaDTO> feedPosts = homeServiceImpl.getAllPosts(userId);
+        
+
+        int totalNoOfPages = homeServiceImpl.getTotalNoOfPosts(userId, pageSize);
+        
+        ArrayList<FeedPostMediaDTO> feedPosts = homeServiceImpl.getAllPosts(userId, page, pageSize);
         mv.addObject("feedPosts", feedPosts);
+        mv.addObject("currentPage", page);
+        mv.addObject("userId", userId);
+        mv.addObject("totalPages", totalNoOfPages);
 		mv.setViewName("selecteduserprofile.html");
 		return mv;
 	}

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -38,11 +39,14 @@ public class HomeController {
 	private UserServiceImpl userServiceImpl;
 
 	@Autowired
-	private HomeServiceImpl homeServiceImpl;;
+	private HomeServiceImpl homeServiceImpl;
 	
 	@GetMapping("/")
-	private ModelAndView showHomePage() {
+	private ModelAndView showHomePage(@RequestParam(defaultValue = "0") int page) {
         System.out.println("Inside showHomePage method");
+        
+        int pageSize = 3; // Show 3 posts per page
+        
 		ModelAndView mv = new ModelAndView();
 		// Get the logged-in user's email (username in this case)
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -55,9 +59,14 @@ public class HomeController {
         if (user != null) {
             mv.addObject("userName", user.getUsername());
         }
-
-        ArrayList<FeedPostMediaDTO> feedPosts = homeServiceImpl.getAllPosts();
+        
+        int totalNoOfPages = homeServiceImpl.getTotalNoOfPosts(pageSize);
+        
+        
+        ArrayList<FeedPostMediaDTO> feedPosts = homeServiceImpl.getAllPosts(page, pageSize);
         mv.addObject("feedPosts", feedPosts);
+        mv.addObject("currentPage", page);
+        mv.addObject("totalPages", totalNoOfPages);
 		mv.setViewName("home.html");
 		return mv;
 	}
@@ -238,10 +247,17 @@ public class HomeController {
 	@PostMapping("/editThisPost")
 	public ModelAndView editThisPost(@Valid @ModelAttribute("post") FeedPostMediaDTO feedPost,
 			@RequestParam("mediaData") ArrayList<MultipartFile> mediaData,
-			@RequestParam("postId") Long postId) throws IOException {
+			@RequestParam("postId") Long postId,
+			@RequestParam("totalMediaCount") int totalMediaCount,
+			RedirectAttributes redirectAttributes) throws IOException {
 		System.out.println("Inside editThisPost method");
 		ModelAndView mv = new ModelAndView();
 		
+		if(totalMediaCount>5) {
+			redirectAttributes.addFlashAttribute("mediaErrorMsg","Not more than 5 media(Images/Videos) files can be uploaded per post.");
+			mv.setViewName("redirect:/showEditPost?postId=" + postId);
+			return mv;
+		}
 		// Get the logged-in user's email (username in this case)
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();  // Get the logged-in user's email
