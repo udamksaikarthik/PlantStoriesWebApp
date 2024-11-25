@@ -26,7 +26,7 @@ public class SecurityConfig {
             .csrf().disable() 
             .authorizeHttpRequests(authorize -> authorize
                 // Allow public access to static resources and the signup/login pages
-                .requestMatchers("/css/**", "/js/**", "/images/**", "/signup", "/login").permitAll()
+                .requestMatchers("/css/**", "/js/**", "/images/**", "/signup", "/login", "/forgot-password", "/reset-password", "/showForgotPasswordPage").permitAll()
                 // Restrict access to /admin/** to users with the ADMIN role
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 // Restrict access to /user/** to users with the USER role

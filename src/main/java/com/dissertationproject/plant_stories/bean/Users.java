@@ -2,6 +2,7 @@ package com.dissertationproject.plant_stories.bean;
 
 import java.util.Date;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
@@ -14,6 +15,11 @@ public class Users {
     // Username field with validation to ensure it is not blank
     @NotBlank(message = "Username is required")
     private String username;
+    
+    @NotBlank(message = "Email is required")
+    @Email
+    private String email;
+
 
     // Password field with validation to ensure it is not blank and has a minimum length
     @NotBlank(message = "Password is required")
@@ -119,6 +125,14 @@ public class Users {
 
 	public void setBio(String bio) {
 		this.bio = bio;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
     
     
