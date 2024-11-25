@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.dissertationproject.plant_stories.bean.FeedPostMediaDTO;
 import com.dissertationproject.plant_stories.bean.Users;
@@ -113,7 +114,6 @@ public class UserController {
 
         int pageSize = 3; // Show 3 posts per page
         
-
         
 		ModelAndView mv = new ModelAndView();
 		// Get the logged-in user's email (username in this case)
@@ -143,8 +143,10 @@ public class UserController {
 	}
 
 	@GetMapping("/showThisUserProfile")
-	public ModelAndView showThisUserProfile(@RequestParam("userId") Long userId,
-			@RequestParam(defaultValue = "0") int page) {
+	public ModelAndView showThisUserProfile(@RequestParam(defaultValue = "0") Long userId,
+			@RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "USER_DEFAULT") String userName,
+			@RequestParam(defaultValue = "0") int fragment) {
 		
 
         int pageSize = 3; // Show 3 posts per page
@@ -154,13 +156,30 @@ public class UserController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();  // Get the logged-in user's email
 
+        com.dissertationproject.plant_stories.model.Users userFromUrl = userRepository.findByUsername(userName);
+
+        if(userId ==0) {
+        	userId = userFromUrl.getId();
+        }
         // Fetch the user entity from the database using the email
         Optional<com.dissertationproject.plant_stories.model.Users> user = userRepository.findById(userId);
       
+        
         if(user.isPresent()) {
         	com.dissertationproject.plant_stories.model.Users existingUser = user.get();
             mv.addObject("selectedUsername", existingUser.getUsername());
             mv.addObject("userBio", existingUser.getBio());
+        }else {
+        	 String resetUrl = ServletUriComponentsBuilder
+                     .fromCurrentContextPath()
+                     .path("/profile")
+                     .queryParam("page", page)
+                     .queryParam("fragment", fragment)
+                     .queryParam("userName", userName)
+                     .toUriString();
+            System.out.println("updatedUrl:"+resetUrl);
+            mv.setViewName(resetUrl);
+            return mv;
         }
         mv.addObject("userName", username);
         

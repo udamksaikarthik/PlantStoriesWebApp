@@ -117,3 +117,23 @@ document.addEventListener("DOMContentLoaded", function () {
         lazyVideos.forEach(video => videoObserver.observe(video));
     }
 });
+
+// Parse query parameters
+const urlParams = new URLSearchParams(window.location.search);
+const page = urlParams.get('page');
+const fragment = urlParams.get('fragment');
+
+if (page) {
+    console.log("Redirecting to page:", page);
+    // Implement logic to display the correct page in your pagination logic
+}
+
+if (fragment) {
+    console.log("Navigating to fragment:", fragment);
+    // Scroll to the element with the fragment ID
+    const element = document.getElementById(fragment);
+    if (element) {
+        element.scrollIntoView();
+    }
+}
+

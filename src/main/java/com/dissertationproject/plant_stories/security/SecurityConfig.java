@@ -7,6 +7,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
+import org.springframework.security.web.savedrequest.SavedRequest;
 
 @Configuration
 public class SecurityConfig {
@@ -37,8 +39,35 @@ public class SecurityConfig {
             .formLogin(form -> form
                 // Specify the custom login page URL
                 .loginPage("/login")
-                // Redirect to the home page ("/") after a successful login
-                .defaultSuccessUrl("/", true)
+                .successHandler((request, response, authentication) -> {
+                    HttpSessionRequestCache requestCache = new HttpSessionRequestCache();
+                    SavedRequest savedRequest = requestCache.getRequest(request, response);
+
+                    if (savedRequest != null) {
+                        // Get the original URL with query parameters
+                        String targetUrl = savedRequest.getRedirectUrl();
+                        System.out.println("Saved URL: " + savedRequest.getRedirectUrl());
+                        response.sendRedirect(targetUrl);
+                    } else {
+                        // Handle default redirection with parameters if provided
+                        String page = request.getParameter("page");
+                        String fragment = request.getParameter("fragment");
+
+                        StringBuilder redirectUrl = new StringBuilder("/?");
+                        if (page != null) {
+                            redirectUrl.append("page=").append(page);
+                        }
+                        if (fragment != null) {
+                            if (page != null) {
+                                redirectUrl.append("&");
+                            }
+                            redirectUrl.append("fragment=").append(fragment);
+                        }
+
+                        response.sendRedirect(redirectUrl.toString());
+                    }
+                })
+
                 // Use a custom handler to handle login failures
                 .failureHandler(customAuthenticationFailureHandler())
                 // Allow unauthenticated access to the login page

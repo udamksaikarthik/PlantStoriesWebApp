@@ -147,12 +147,14 @@
 							</button>
 						</form>
 
+		                
 		                <button class="action-button" onclick="shareStory(this)"
 						        data-title="${post.postTitle}" 
 						        data-description="${post.postDescription}" 
-						        th:data-url="'/#' + ${post.postId}">
+						        th:data-url="'/showThisUserProfile?page='+${currentPage} +'&fragment=' + ${post.postId} +'&userName=' + ${userName}">
 						    Share
 						</button>
+				
 		            </div>
 		            
         			<!-- Comments Section -->
