@@ -109,7 +109,9 @@ public class UserController {
     }
 	
 	@GetMapping("/profile")
-	public ModelAndView showUserProfile(@RequestParam(defaultValue = "0") int page) {
+	public ModelAndView showUserProfile(@RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "USER_DEFAULT") String userName,
+			@RequestParam(defaultValue = "0") int fragment) {
 		
 
         int pageSize = 3; // Show 3 posts per page
@@ -157,6 +159,8 @@ public class UserController {
         String username = authentication.getName();  // Get the logged-in user's email
 
         com.dissertationproject.plant_stories.model.Users userFromUrl = userRepository.findByUsername(userName);
+        
+        com.dissertationproject.plant_stories.model.Users loggedInuser = userRepository.findByEmail(username);
 
         if(userId ==0) {
         	userId = userFromUrl.getId();
@@ -169,19 +173,8 @@ public class UserController {
         	com.dissertationproject.plant_stories.model.Users existingUser = user.get();
             mv.addObject("selectedUsername", existingUser.getUsername());
             mv.addObject("userBio", existingUser.getBio());
-        }else {
-        	 String resetUrl = ServletUriComponentsBuilder
-                     .fromCurrentContextPath()
-                     .path("/profile")
-                     .queryParam("page", page)
-                     .queryParam("fragment", fragment)
-                     .queryParam("userName", userName)
-                     .toUriString();
-            System.out.println("updatedUrl:"+resetUrl);
-            mv.setViewName(resetUrl);
-            return mv;
         }
-        mv.addObject("userName", username);
+        mv.addObject("userName", loggedInuser.getUsername());
         
 
         int totalNoOfPages = homeServiceImpl.getTotalNoOfPosts(userId, pageSize);
