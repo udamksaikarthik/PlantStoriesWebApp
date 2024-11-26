@@ -7,7 +7,7 @@ import jakarta.validation.Valid;
 
 public interface UserServiceImpl {
 
-	Boolean checkIfUsernameAlreadyExists(@Valid Users users);
+	Boolean checkIfEmailAlreadyExists(@Valid Users users);
 
 	void registerUser(@Valid Users users);
 

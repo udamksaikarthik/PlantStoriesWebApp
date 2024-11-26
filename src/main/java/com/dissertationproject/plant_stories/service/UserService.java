@@ -15,9 +15,9 @@ public class UserService implements UserServiceImpl{
 	private UserDao userDao;
 	
 	@Override
-	public Boolean checkIfUsernameAlreadyExists(Users users) {
+	public Boolean checkIfEmailAlreadyExists(Users users) {
 		// TODO Auto-generated method stub
-		return userDao.checkIfUsernameAlreadyExists(users);
+		return userDao.checkIfEmailAlreadyExists(users);
 	}
 
 	@Override

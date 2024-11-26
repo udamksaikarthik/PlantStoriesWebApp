@@ -28,16 +28,16 @@ public class UserDao {
     @Autowired
     private PasswordEncoder passwordEncoder; 
     
-	public Boolean checkIfUsernameAlreadyExists(Users users) {
+	public Boolean checkIfEmailAlreadyExists(Users users) {
 		// TODO Auto-generated method stub
 		Boolean flag = false;
-		String user_name = users.getUsername().trim();
-		com.dissertationproject.plant_stories.model.Users user = userRepository.findByUsername(user_name);
+		String email = users.getEmail().trim();
+		com.dissertationproject.plant_stories.model.Users user = userRepository.findByEmail(email);
 		if(user!=null) {
-			System.out.println("Username already exists");
+			System.out.println("email already exists");
 			flag = true;
 		}else {
-			System.out.println("New Username");
+			System.out.println("New email");
 			flag = false;
 		}
 		return flag;
