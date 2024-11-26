@@ -97,10 +97,10 @@ public class UserController {
             return "signup";  // Return signup page with error
         }
         
-        Boolean flag = userServiceImpl.checkIfUsernameAlreadyExists(users);
+        Boolean flag = userServiceImpl.checkIfEmailAlreadyExists(users);
         
         if(flag) {
-            bindingResult.rejectValue("username", "error.signupForm", "Username already exists with an account! Try again with a different username!");
+            bindingResult.rejectValue("email", "error.signupForm", "Email already exists with an account! Try again with a different email!");
             return "signup";
         }
 
