@@ -293,4 +293,65 @@ public class HomeController {
 		mv.setViewName("redirect:/showEditPost?postId=" + postId);
 		return mv;
 	}
+	
+	@GetMapping("/showMembers")
+	public ModelAndView showMembers() {
+		ModelAndView mv = new ModelAndView();
+		// Get the logged-in user's email (username in this case)
+	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	    String username = authentication.getName();  // Get the logged-in user's email
+	
+	    // Fetch the user entity from the database using the email
+	    Users user = userRepository.findByEmail(username);
+	    
+	    ArrayList<Users> usersList = (ArrayList<Users>) userRepository.findAll();
+	
+	    // Add the first name, last name, and role to the model
+	    if (user != null) {
+	        mv.addObject("userName", user.getUsername());
+	    }
+	    if(!usersList.isEmpty()) {
+	    	mv.addObject("users", usersList);
+	    }
+		mv.setViewName("members.html");
+		return mv;
+	}
+	
+	@GetMapping("/showAbout")
+	public ModelAndView showAbout() {
+		ModelAndView mv = new ModelAndView();
+		// Get the logged-in user's email (username in this case)
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();  // Get the logged-in user's email
+
+        // Fetch the user entity from the database using the email
+        Users user = userRepository.findByEmail(username);
+
+        // Add the first name, last name, and role to the model
+        if (user != null) {
+            mv.addObject("userName", user.getUsername());
+        }
+		mv.setViewName("about.html");
+		return mv;
+	}
+	
+	@GetMapping({"/ask4help","/projectIdeas","/projectTracker","/inventory"})
+	public ModelAndView notImplementedYet() {
+		System.out.println("Inside deleteMedia method");
+		ModelAndView mv = new ModelAndView();
+		// Get the logged-in user's email (username in this case)
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();  // Get the logged-in user's email
+
+        // Fetch the user entity from the database using the email
+        Users user = userRepository.findByEmail(username);
+
+        // Add the first name, last name, and role to the model
+        if (user != null) {
+            mv.addObject("userName", user.getUsername());
+        }
+        
+		mv.setViewName("notimplementedyet.html");
+		return mv;
+	}
 }

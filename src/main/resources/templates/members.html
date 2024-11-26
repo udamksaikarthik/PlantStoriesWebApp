@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Stories Feed</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" th:href="@{/css/homepageStyles.css}">
+</head>
+<body>
+	<div class="header-container">
+		<div class="left-alignment-header-container common-header-container">
+			<h1>Welcome, <span th:text="${userName}"></span></h1>
+		</div>
+		<div class="center-alignment-header-container common-header-container">
+			<img class="app_logo_img" th:src="@{/images/plantstories_logo.png}" alt="#">
+			<div class="header-inner-text-container">
+				<h1>Plant Stories</h1>
+			</div>
+		</div>
+		<div class="right-alignment-header-container common-header-container">
+			<form class="right-alignment-header-container-mobile-logout-form" action="/logout" method="post">
+			    <button type="submit" class="form_btn_logout">Logout</button>
+			</form>
+			<button class="mobile_menu_btn" onclick="menuBtn()">
+				<img id="mobile_menu_img_id" class="mobile_menu_icon" alt="#" th:src="@{/images/mobile_menu_icon.png}">
+			</button>
+		</div>
+	</div>
+	
+	<div id="mobile_menu_container_id" class="mobile_menu_container">
+			<a href="/profile">Profile</a>
+			<a href="/">Feed</a>
+			<a href="/addPost">Post</a>
+			<a href="/showMembers">Members</a>
+			<a href="/showAbout">About</a>
+			<a href="/ask4help">Ask4Help</a>
+			<a href="/projectIdeas">Project Ideas</a>
+			<a href="/projectTracker">Project Tracker</a>
+			<a href="/inventory">Inventory</a>
+		<form action="/logout" method="post">
+			    <button type="submit" class="form_btn_logout">Logout</button>
+		</form>
+	</div>
+	
+	<div id="mobile-left-alignment-header-container-id" class="mobile-left-alignment-header-container common-header-container">
+			<h1>Welcome, <span th:text="${userName}"></span></h1>
+	</div>
+	
+	<div class="body_container">
+		<div class="menu_desktop_container">
+			<a href="/profile">Profile</a>
+			<a href="/">Feed</a>
+			<a href="/addPost">Post</a>
+			<a href="/showMembers">Members</a>
+			<a href="/showAbout">About</a>
+			<a href="/ask4help">Ask4Help</a>
+			<a href="/projectIdeas">Project Ideas</a>
+			<a href="/projectTracker">Project Tracker</a>
+			<a href="/inventory">Inventory</a>
+		</div>
+		<div class="feed_container">
+					<h1>Members</h1>
+					<div class="straight_line_class"></div>
+					<h4 style="color: red; text-align: center; margin: 1em 0;"> You can view member profile and post stories by clicking the below buttons.</h4>
+					<div class="feed_members_container">
+						<div class="user-card-container" th:each="user : ${users}">
+							<div class="user-card">
+			                    <img class="profile-image" th:src="@{/images/plantstories_logo.png}" alt="User Image">
+			                    <h4 class="username" th:text="${user.username}"></h4>
+			                    <a class="user_logo_post_button_icon" 
+								   th:href="@{/showThisUserProfile(userId=${user.Id})}">
+								    
+								</a>
+						</div>
+					</div>
+		    </div>
+		
+		    <!-- Full-Screen Media Modal -->
+			<div id="fullscreen-modal" class="modal" onclick="closeMediaFullscreen()">
+			    <img id="modal-image" class="modal-content" style="display: none;">
+			    <video id="modal-video" class="modal-content" controls style="display: none;"></video>
+			</div>
+		</div>
+	</div>
+	
+    <script type="text/javascript" th:src="@{/js/home.js}"></script>
+</body>
+</html>
