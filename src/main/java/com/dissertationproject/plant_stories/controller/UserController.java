@@ -82,6 +82,10 @@ public class UserController {
     public String processSignup(@Valid @ModelAttribute("signupForm") Users users,
                                 BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         System.out.println("Inside processSignup method");
+        
+        System.out.println("users: "+users.toString());
+        System.out.println("users email: "+users.getEmail());
+        
      // Check for validation errors
         if (bindingResult.hasErrors()) {
             return "signup";  // Return signup page with errors
