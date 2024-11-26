@@ -59,6 +59,9 @@ public class UserDao {
         userEntity.setPassword(passwordEncoder.encode(users.getPassword()));
 
         userEntity.setCreatedAt(new Date());
+        
+
+        userEntity.setEmail(users.getEmail());
 
         return userEntity;
 	}
