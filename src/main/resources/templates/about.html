@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Stories Feed</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" th:href="@{/css/homepageStyles.css}">
+</head>
+<body>
+	<div class="header-container">
+		<div class="left-alignment-header-container common-header-container">
+			<h1>Welcome, <span th:text="${userName}"></span></h1>
+		</div>
+		<div class="center-alignment-header-container common-header-container">
+			<img class="app_logo_img" th:src="@{/images/plantstories_logo.png}" alt="#">
+			<div class="header-inner-text-container">
+				<h1>Plant Stories</h1>
+			</div>
+		</div>
+		<div class="right-alignment-header-container common-header-container">
+			<form class="right-alignment-header-container-mobile-logout-form" action="/logout" method="post">
+			    <button type="submit" class="form_btn_logout">Logout</button>
+			</form>
+			<button class="mobile_menu_btn" onclick="menuBtn()">
+				<img id="mobile_menu_img_id" class="mobile_menu_icon" alt="#" th:src="@{/images/mobile_menu_icon.png}">
+			</button>
+		</div>
+	</div>
+	
+	<div id="mobile_menu_container_id" class="mobile_menu_container">
+			<a href="/profile">Profile</a>
+			<a href="/">Feed</a>
+			<a href="/addPost">Post</a>
+			<a href="/showMembers">Members</a>
+			<a href="/showAbout">About</a>
+			<a href="/ask4help">Ask4Help</a>
+			<a href="/projectIdeas">Project Ideas</a>
+			<a href="/projectTracker">Project Tracker</a>
+			<a href="/inventory">Inventory</a>
+		<form action="/logout" method="post">
+			    <button type="submit" class="form_btn_logout">Logout</button>
+		</form>
+	</div>
+	
+	<div id="mobile-left-alignment-header-container-id" class="mobile-left-alignment-header-container common-header-container">
+			<h1>Welcome, <span th:text="${userName}"></span></h1>
+	</div>
+	
+	<div class="body_container">
+		<div class="menu_desktop_container">
+			<a href="/profile">Profile</a>
+			<a href="/">Feed</a>
+			<a href="/addPost">Post</a>
+			<a href="/showMembers">Members</a>
+			<a href="/showAbout">About</a>
+			<a href="/ask4help">Ask4Help</a>
+			<a href="/projectIdeas">Project Ideas</a>
+			<a href="/projectTracker">Project Tracker</a>
+			<a href="/inventory">Inventory</a>
+		</div>
+		<div class="feed_container">
+					<h1>About - Plant Stories Web Application</h1>
+					<div class="straight_line_class"></div>
+					<div class="web_app_content_container">
+						<p>Welcome to Plant Stories, a unique storytelling platform where nature meets creativity! 🌿🌼 Here, you can embark on a magical journey of sharing your reflections, adventures, and discoveries in the world of plants, nature, and community gardening. 🌳✨
+						Our platform invites you to craft narrative-based posts that breathe life into your gardening experiences and Wild Roots Community Garden stories. Whether it's the joy of witnessing your first bloom 🌺, the challenges of nurturing a stubborn cactus 🌵, or the serenity of connecting with nature 🌞🍃, Plant Stories is the perfect space to reflect and share. <br><br>
+						🌟 Why Join Plant Stories?<br><br>
+						🌼 Share Your Story: Express your love for nature through creative, heartfelt posts.<br><br>
+						💬 Engage with the Community: Comment, react, and connect with fellow nature enthusiasts and garden members.<br><br>
+						📖 Reflect and Grow: Use storytelling as a way to reflect on your gardening journey and deepen your connection with the earth.<br><br>
+						🎉 Celebrate Wild Roots Garden: Dive into stories from the vibrant Wild Roots Community Garden and explore the narratives of its members.<br><br>
+						🌍 A Space for ConnectionPlant Stories isn’t just a platform—it’s a growing community. Together, we celebrate the small victories of sprouting seeds 🌱, the beauty of thriving blooms 🌷, and the lessons learned from nature’s quiet wisdom 🌙. Through comments, reactions, and reflections, we nurture a bond that transcends borders and brings us closer to the heart of nature. ❤️🌳<br><br>
+						So, let’s grow, share, and inspire—one story at a time. Your garden has a tale to tell, and we can't wait to hear it! 🌟✨<br><br>
+						🌿 Plant Stories: Where stories grow, roots connect, and nature thrives. 🌍💚<br>
+						</p>
+						
+						<div class="logo-card-container">
+						
+							<div class="logo-card">
+				                    <img class="profile-image" th:src="@{/images/instagram.png}" alt="User Image">
+				                    <h4 class="username">wildrootscommunitygarden</h4>
+				                    <a class="user_logo_post_button_icon" 
+									   target="_blank"
+									   href="https://www.instagram.com/wildrootscommunitygarden/">
+									    
+									</a>
+							</div>
+							
+							
+							<div class="logo-card">
+				                    <img class="profile-image" th:src="@{/images/facebook.png}" alt="User Image">
+				                    <h4 class="username">wildrootscommunitygarden</h4>
+				                    <a class="user_logo_post_button_icon" 
+									   target="_blank"
+									   href="https://www.facebook.com/wildrootscommunitygarden">
+									    
+									</a>
+							</div>
+						
+						</div>
+					</div>
+		    </div>
+		
+		    <!-- Full-Screen Media Modal -->
+			<div id="fullscreen-modal" class="modal" onclick="closeMediaFullscreen()">
+			    <img id="modal-image" class="modal-content" style="display: none;">
+			    <video id="modal-video" class="modal-content" controls style="display: none;"></video>
+			</div>
+		</div>
+			
+	
+    <script type="text/javascript" th:src="@{/js/home.js}"></script>
+</body>
+</html>

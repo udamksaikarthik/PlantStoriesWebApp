@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
@@ -28,6 +29,11 @@ public class Users {
     @NotBlank(message = "Username is required")
     @Column(name = "username", nullable = false)
     private String username;
+    
+    @NotBlank(message = "Email is required")
+    @Column(name = "email", nullable = false)
+    @Email
+    private String email;
 
     // Password field with validation and database constraints
     @NotBlank(message = "Password is required")
@@ -153,5 +159,15 @@ public class Users {
 	public void setBio(String bio) {
 		this.bio = bio;
 	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
+	
     
 }

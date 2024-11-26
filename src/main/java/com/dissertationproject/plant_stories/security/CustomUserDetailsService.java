@@ -30,18 +30,19 @@ public class CustomUserDetailsService implements UserDetailsService {
      * @throws UsernameNotFoundException if the user is not found in the database
      */
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         // Fetch user from the database using the email (username)
-        Users user = userRepository.findByUsername(username);
+        Users user = userRepository.findByEmail(email);
         
         // Throw an exception if the user is not found
         if (user == null) {
-            throw new UsernameNotFoundException("User not found with email: " + username);
+        	System.out.println("User not found with email: " + email);
+            throw new UsernameNotFoundException("User not found with email: " + email);
         }
 
         // Build and return a Spring Security UserDetails object
         return User
-                .withUsername(user.getUsername()) // Set the email as the username
+                .withUsername(user.getEmail()) // Set the email as the username
                 .password(user.getPassword()) // Set the encoded password
                 .roles(user.getRole())        // Assign roles to the user (e.g., "USER", "ADMIN")
                 .build();

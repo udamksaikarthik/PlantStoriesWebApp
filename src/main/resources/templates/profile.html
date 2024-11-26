@@ -30,10 +30,15 @@
 	</div>
 	
 	<div id="mobile_menu_container_id" class="mobile_menu_container">
-		<a href="/profile">Profile</a>
-		<a href="/">Feed</a>
-		<a href="/addPost">Post</a>
-		<a href="/ask4help">Ask4Help</a>
+			<a href="/profile">Profile</a>
+			<a href="/">Feed</a>
+			<a href="/addPost">Post</a>
+			<a href="/showMembers">Members</a>
+			<a href="/showAbout">About</a>
+			<a href="/ask4help">Ask4Help</a>
+			<a href="/projectIdeas">Project Ideas</a>
+			<a href="/projectTracker">Project Tracker</a>
+			<a href="/inventory">Inventory</a>
 		<form action="/logout" method="post">
 			    <button type="submit" class="form_btn_logout">Logout</button>
 		</form>
@@ -48,7 +53,12 @@
 			<a href="/profile">Profile</a>
 			<a href="/">Feed</a>
 			<a href="/addPost">Post</a>
+			<a href="/showMembers">Members</a>
+			<a href="/showAbout">About</a>
 			<a href="/ask4help">Ask4Help</a>
+			<a href="/projectIdeas">Project Ideas</a>
+			<a href="/projectTracker">Project Tracker</a>
+			<a href="/inventory">Inventory</a>
 		</div>
 		<div class="feed_container">
 			<h1>Profile</h1>
@@ -147,12 +157,14 @@
 							</button>
 						</form>
 
+		                
 		                <button class="action-button" onclick="shareStory(this)"
 						        data-title="${post.postTitle}" 
 						        data-description="${post.postDescription}" 
-						        th:data-url="'/#' + ${post.postId}">
+						        th:data-url="'/showThisUserProfile?page='+${currentPage} +'&fragment=' + ${post.postId} +'&userName=' + ${userName}">
 						    Share
 						</button>
+				
 		            </div>
 		            
         			<!-- Comments Section -->

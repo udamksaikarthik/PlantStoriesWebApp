@@ -17,8 +17,26 @@
 	</div>
 
     <div class="main-container">
-    	
-    	<h4 id="form-success-messageId" class="form-success-message" th:text="${signup_success_message}"></h4>
+    	<h4 id="form-success-messageId" class="form-success-message" 
+		    th:if="${signup_success_message != null and !signup_success_message.isEmpty()}" 
+		    th:text="${signup_success_message}"></h4>
+		
+		<h4 style="color: green; text-align: center; margin: 1em 0;" 
+		    th:if="${passwordResetMsgSuccess != null and !passwordResetMsgSuccess.isEmpty()}" 
+		    th:text="${passwordResetMsgSuccess}"></h4>
+		
+		<h4 style="color: red; text-align: center; margin: 1em 0;" 
+		    th:if="${passwordResetMsgError != null and !passwordResetMsgError.isEmpty()}" 
+		    th:text="${passwordResetMsgError}"></h4>
+		
+		<h4 style="color: green; text-align: center; margin: 1em 0;" 
+		    th:if="${passwordResetMailMsgSuccess != null and !passwordResetMailMsgSuccess.isEmpty()}" 
+		    th:text="${passwordResetMailMsgSuccess}"></h4>
+		
+		<h4 style="color: red; text-align: center; margin: 1em 0;" 
+		    th:if="${passwordResetMailMsgError != null and !passwordResetMailMsgError.isEmpty()}" 
+		    th:text="${passwordResetMailMsgError}"></h4>
+
         <div class="login-container">
             <h1 class="login-title">Login</h1>
 
@@ -30,9 +48,9 @@
 
                 <!-- Username (Gmail/Email) -->
                 <div class="input-group">
-                    <label for="username">Username</label>
+                    <label for="email">Email</label>
                     <!-- Name attribute should be "username" for Spring Security compatibility -->
-                    <input type="username" id="username" name="username" placeholder="Enter your Username" required>
+                    <input type="email" id="email" name="username" placeholder="Enter your Email" required>
                 </div>
 
                 <!-- Password -->
@@ -50,14 +68,18 @@
 	            <div th:if="${session.loginError}">
 	                <p style="color: red; text-align: center; margin: 1em 0;" th:text="${session.loginError}"></p>
 	            </div>
+	            
+	            
 
                 <!-- Submit Button -->
                 <button type="submit" class="btn">Login</button>
             </form>
-
+			
             <!-- Signup Link -->
             <div class="signup-link">
                 <p>Don't have an account? <a href="/signup">Create an account</a></p>
+                <br>
+                <p>Forgot Password? <a href="/showForgotPasswordPage">Reset your password</a></p>
             </div>
         </div>
     </div>

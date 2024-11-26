@@ -53,7 +53,7 @@ public class HomeController {
         String username = authentication.getName();  // Get the logged-in user's email
 
         // Fetch the user entity from the database using the email
-        Users user = userRepository.findByUsername(username);
+        Users user = userRepository.findByEmail(username);
 
         // Add the first name, last name, and role to the model
         if (user != null) {
@@ -80,7 +80,7 @@ public class HomeController {
         String username = authentication.getName();  // Get the logged-in user's name
         
         // Fetch the user entity from the database using the email
-        Users user = userRepository.findByUsername(username);
+        Users user = userRepository.findByEmail(username);
 
         // Add the first name, last name, and role to the model
         if (user != null) {
@@ -104,7 +104,7 @@ public class HomeController {
         String username = authentication.getName();  // Get the logged-in user's email
 
         // Fetch the user entity from the database using the email
-        Users user = userRepository.findByUsername(username);
+        Users user = userRepository.findByEmail(username);
 
         // Add the first name, last name, and role to the model
         if (user != null) {
@@ -152,7 +152,7 @@ public class HomeController {
         String username = authentication.getName();  // Get the logged-in user's email
 
         // Fetch the user entity from the database using the email
-        Users user = userRepository.findByUsername(username);
+        Users user = userRepository.findByEmail(username);
         
 		System.out.println(commentForm.toString());
 		homeServiceImpl.addComment(commentForm, postId, user.getId(), username);
@@ -181,7 +181,7 @@ public class HomeController {
         String username = authentication.getName();  // Get the logged-in user's email
 
         // Fetch the user entity from the database using the email
-        Users user = userRepository.findByUsername(username);
+        Users user = userRepository.findByEmail(username);
         
         EditProfileDTO profileDTO = new EditProfileDTO();
         profileDTO.setUsername(user.getUsername());
@@ -204,7 +204,7 @@ public class HomeController {
         String username = authentication.getName();  // Get the logged-in user's email
 
         // Fetch the user entity from the database using the email
-        Users user = userRepository.findByUsername(username);
+        Users user = userRepository.findByEmail(username);
         System.out.println("userID:"+ user.getId());
         userServiceImpl.editprofile(user.getId(), profileDTO.getBio());
         
@@ -225,7 +225,7 @@ public class HomeController {
         String username = authentication.getName();  // Get the logged-in user's email
 
         // Fetch the user entity from the database using the email
-        Users user = userRepository.findByUsername(username);
+        Users user = userRepository.findByEmail(username);
         System.out.println("userID:"+ user.getId());
         
         mv.addObject("post", post);
@@ -263,7 +263,7 @@ public class HomeController {
         String username = authentication.getName();  // Get the logged-in user's email
 
         // Fetch the user entity from the database using the email
-        Users user = userRepository.findByUsername(username);
+        Users user = userRepository.findByEmail(username);
         System.out.println("userID:"+ user.getId());
         
 		
@@ -291,6 +291,67 @@ public class HomeController {
 
         homeServiceImpl.createPost(user.getId(), post);
 		mv.setViewName("redirect:/showEditPost?postId=" + postId);
+		return mv;
+	}
+	
+	@GetMapping("/showMembers")
+	public ModelAndView showMembers() {
+		ModelAndView mv = new ModelAndView();
+		// Get the logged-in user's email (username in this case)
+	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	    String username = authentication.getName();  // Get the logged-in user's email
+	
+	    // Fetch the user entity from the database using the email
+	    Users user = userRepository.findByEmail(username);
+	    
+	    ArrayList<Users> usersList = (ArrayList<Users>) userRepository.findAll();
+	
+	    // Add the first name, last name, and role to the model
+	    if (user != null) {
+	        mv.addObject("userName", user.getUsername());
+	    }
+	    if(!usersList.isEmpty()) {
+	    	mv.addObject("users", usersList);
+	    }
+		mv.setViewName("members.html");
+		return mv;
+	}
+	
+	@GetMapping("/showAbout")
+	public ModelAndView showAbout() {
+		ModelAndView mv = new ModelAndView();
+		// Get the logged-in user's email (username in this case)
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();  // Get the logged-in user's email
+
+        // Fetch the user entity from the database using the email
+        Users user = userRepository.findByEmail(username);
+
+        // Add the first name, last name, and role to the model
+        if (user != null) {
+            mv.addObject("userName", user.getUsername());
+        }
+		mv.setViewName("about.html");
+		return mv;
+	}
+	
+	@GetMapping({"/ask4help","/projectIdeas","/projectTracker","/inventory"})
+	public ModelAndView notImplementedYet() {
+		System.out.println("Inside deleteMedia method");
+		ModelAndView mv = new ModelAndView();
+		// Get the logged-in user's email (username in this case)
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();  // Get the logged-in user's email
+
+        // Fetch the user entity from the database using the email
+        Users user = userRepository.findByEmail(username);
+
+        // Add the first name, last name, and role to the model
+        if (user != null) {
+            mv.addObject("userName", user.getUsername());
+        }
+        
+		mv.setViewName("notimplementedyet.html");
 		return mv;
 	}
 }

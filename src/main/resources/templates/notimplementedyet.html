@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plant Stories - Edit Profile</title>
+    <title>Plant Stories Feed</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
     <link rel="stylesheet" th:href="@{/css/homepageStyles.css}">
-    <link rel="stylesheet" th:href="@{/css/addPostsStyles.css}">
 </head>
 <body>
 	<div class="header-container">
@@ -49,6 +48,7 @@
 	</div>
 	
 	<div class="body_container">
+		<div class="menu_desktop_container">
 			<a href="/profile">Profile</a>
 			<a href="/">Feed</a>
 			<a href="/addPost">Post</a>
@@ -60,35 +60,17 @@
 			<a href="/inventory">Inventory</a>
 		</div>
 		<div class="feed_container">
-			 <h1>Edit Profile</h1>
-        <p class="disclaimer">Share as much or as little as you like – your story is yours to tell.</p>
-
-        <!-- Form starts here -->
-        <form th:action="@{/editProfile}" th:object="${profileDTO}" method="post" enctype="multipart/form-data">
-            
-            <!-- Username -->
-            <label for="username">
-                Username <span style="color: red;">*</span>:
-            </label>
-            <input type="text" id="username" name="username" th:field="*{username}" maxlength="255" readonly/>
-			<p class="error" th:text="${userNameExistsError}"></p>
-            
-            <!-- Bio -->
-            <label for="bio">
-                User Information / Bio: <span style="color: red;">*</span>:
-            </label>
-            <textarea id="bio" name="bio" th:field="*{bio}" rows="20"></textarea>
-			<p class="error" th:if="${#fields.hasErrors('bio')}" th:errors="*{bio}"></p>
-            
-            
-
-            <!-- Submit Button -->
-            <button class="createPostBtn" type="submit">Edit Profile</button>
-        </form>
+					<h1>This Feature is not implemented yet!</h1>
+		    </div>
+		
+		    <!-- Full-Screen Media Modal -->
+			<div id="fullscreen-modal" class="modal" onclick="closeMediaFullscreen()">
+			    <img id="modal-image" class="modal-content" style="display: none;">
+			    <video id="modal-video" class="modal-content" controls style="display: none;"></video>
+			</div>
 		</div>
-	</div>
+			
 	
-    
     <script type="text/javascript" th:src="@{/js/home.js}"></script>
 </body>
 </html>
