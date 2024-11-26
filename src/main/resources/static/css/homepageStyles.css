@@ -600,4 +600,8 @@ h1 {
 	.media-container {
 	    width: 100%;
 	}
+	.logo-card-container{
+		flex-direction: column;
+		gap: 20px;
+	}
 }
