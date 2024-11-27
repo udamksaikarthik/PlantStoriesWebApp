@@ -47,7 +47,11 @@ public class SecurityConfig {
                         // Get the original URL with query parameters
                         String targetUrl = savedRequest.getRedirectUrl();
                         System.out.println("Saved URL: " + savedRequest.getRedirectUrl());
-                        response.sendRedirect(targetUrl);
+                        if(targetUrl.contains("/error")) {
+                        	response.sendRedirect("/");
+                        }else {
+                            response.sendRedirect(targetUrl);
+                        }
                     } else {
                         // Handle default redirection with parameters if provided
                         String page = request.getParameter("page");
