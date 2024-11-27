@@ -153,7 +153,7 @@ public class HomeController {
         Users user = userRepository.findByEmail(username);
         
 		System.out.println(commentForm.toString());
-		homeServiceImpl.addComment(commentForm, postId, user.getId(), username);
+		homeServiceImpl.addComment(commentForm, postId, user.getId(), user.getUsername());
 		mv.setViewName("redirect:/");
 		return mv;
 	}
