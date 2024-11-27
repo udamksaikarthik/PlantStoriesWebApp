@@ -12,7 +12,6 @@ import org.springframework.stereotype.Repository;
 
 import com.dissertationproject.plant_stories.bean.FeedPostMediaDTO;
 import com.dissertationproject.plant_stories.model.CommentPost;
-import com.dissertationproject.plant_stories.model.LikeCounter;
 import com.dissertationproject.plant_stories.model.MediaPost;
 import com.dissertationproject.plant_stories.model.Posts;
 import com.dissertationproject.plant_stories.model.Users;
@@ -37,10 +36,6 @@ public class HomeDao {
 	@Autowired
 	private CommentPostRepository commentPostRepository;
 
-	@Autowired
-	private LikeCounterRepository likeCounterRepository;
-	
-	private static final String WEB_APP_NAME = "plant_stories_web_app";
 	
 
 	public void createPost(Posts post, ArrayList<MediaPost> mediaPosts) {
@@ -336,88 +331,6 @@ public class HomeDao {
 	}
 
 
-	public Integer liked(Long userId) {
-		// TODO Auto-generated method stub
-		LikeCounter likeCounter = likeCounterRepository.findByWebAppName(WEB_APP_NAME);
-		Integer likesCount = 0;
-		
-		Optional<Users> user = userRepository.findById(userId);
-		
-		if(user.isPresent()) {
-			Users existingUser = user.get();
-			if(existingUser.getLike_flag()) {
-				System.out.println("existingUser.getLike_flag() is true");
-				if(likeCounter!=null) {
-					System.out.println("likeCounter is not null");
-					likesCount = likeCounter.getLikesCount().intValue();
-				}
-			}else {
-				System.out.println("existingUser.getLike_flag() is false");
-				if(likeCounter!=null) {
-					System.out.println("likeCounter is  not null");
-					likeCounter.setLikesCount(likeCounter.getLikesCount() + 1);
-					likeCounterRepository.save(likeCounter);
-					System.out.println("likeCounter.getLikesCount: "+likeCounter.getLikesCount());
-					existingUser.setLike_flag(true);
-					userRepository.save(existingUser);
-					likesCount = likeCounter.getLikesCount().intValue();
-				}else {
-					System.out.println("likeCounter is  null");
-					LikeCounter likeCounterObj = new LikeCounter();
-					likeCounterObj.setWebAppName(WEB_APP_NAME);
-					likeCounterObj.setLikesCount(1L);
-					likeCounterRepository.save(likeCounterObj);
-					System.out.println("likeCounterObj.getLikesCount: "+likeCounterObj.getLikesCount());
-					existingUser.setLike_flag(true);
-					userRepository.save(existingUser);
-					likesCount = likeCounterObj.getLikesCount().intValue();
-				}
-			}
-		}
-		return likesCount;
-	}
-
-
-	public Integer unliked(Long userId) {
-		// TODO Auto-generated method stub
-		LikeCounter likeCounter = likeCounterRepository.findByWebAppName(WEB_APP_NAME);
-
-		Integer likesCount = 0;
-
-		Optional<Users> user = userRepository.findById(userId);
-		
-		if(user.isPresent()) {
-			Users existingUser = user.get();
-			if(existingUser.getLike_flag()) {
-				if(likeCounter!=null) {
-					likeCounter.setLikesCount(likeCounter.getLikesCount() - 1);
-					likeCounterRepository.save(likeCounter);
-					existingUser.setLike_flag(false);
-					userRepository.save(existingUser);
-					likesCount = likeCounter.getLikesCount().intValue();
-				}
-			}else {
-				
-				}
-			}
-		
-		return likesCount;
-	}
-
-
-	public String getLikeCount() {
-		// TODO Auto-generated method stub
-
-		LikeCounter likeCounter = likeCounterRepository.findByWebAppName(WEB_APP_NAME);
-		
-		if(likeCounter!=null) {
-			String msg = "Like Count: "+likeCounter.getLikesCount();
-			return msg;
-		}else {
-			String msg = "Like Count: 0";
-			return msg;
-		}
-	}
 
 
 

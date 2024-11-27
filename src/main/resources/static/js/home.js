@@ -96,6 +96,16 @@ function toggleComments(postId) {
     }
 }
 
+function toggleCommentSection(postId) {
+	console.log("Inside toggleCommentSection")
+    const commentContainer = document.getElementById(`comment-section-container-${postId}`);
+    if (commentContainer.style.display === "none") {
+        commentContainer.style.display = "block";
+    } else {
+        commentContainer.style.display = "none";
+    }
+}
+
 document.addEventListener("DOMContentLoaded", function () {
     const lazyVideos = document.querySelectorAll("video[loading='lazy']");
 

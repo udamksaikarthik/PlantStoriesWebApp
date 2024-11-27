@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.dissertationproject.plant_stories.bean.CommentForm;
 import com.dissertationproject.plant_stories.bean.FeedPostMediaDTO;
 import com.dissertationproject.plant_stories.bean.Users;
 import com.dissertationproject.plant_stories.dao.UserRepository;
@@ -188,6 +189,7 @@ public class UserController {
         mv.addObject("feedPosts", feedPosts);
         mv.addObject("currentPage", page);
         mv.addObject("userId", userId);
+        mv.addObject("commentForm", new CommentForm());
         mv.addObject("totalPages", totalNoOfPages);
 		mv.setViewName("selecteduserprofile.html");
 		return mv;
