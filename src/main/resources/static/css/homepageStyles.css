@@ -514,6 +514,45 @@ h1 {
 	font-size: 1.2em;
 	font-weight: bold;
 }
+
+.reactions label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.reactions .emoji-text {
+    font-weight: bold; /* Bold for emoji and initial text */
+    margin-right: 5px;
+}
+
+.reactions .description-text {
+    font-weight: normal; /* Regular for the description */
+    color: #555; /* Optional: Subtle color for description */
+}
+.comment_form_class{
+	width: 100%;
+	padding: 1em;
+}
+.comment-box textarea{
+	width: 100%;
+	padding: 1em;
+}
+.createPostBtn{
+	width: 100%;
+	padding: 10px;
+	background-color: #2ecc71;
+	color: white;
+	font-weight: bold;
+	border: none;
+	border-radius: 5px;
+}
+
+.createPostBtn:hover{
+	background-color: #27ae60;
+}
 /* Responsive Design for Mobile */
 @media (max-width: 768px) {
     

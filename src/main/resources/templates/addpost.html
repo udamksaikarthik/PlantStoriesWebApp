@@ -98,41 +98,41 @@
             
             <!-- Care Routine -->
             <label for="careRoutine">
-                Care Routine:
+                Care Routine (optional)
                 <button type="button" class="info-icon" onclick="toggleTooltip(this, 'Detail your plant care routine. For example, I water my roses every morning or I repotted my cactus and added organic fertilizer.')">i</button>
             </label>
             <textarea id="careRoutine" name="careRoutine" th:field="*{careRoutine}" rows="2"></textarea>
 
             <!-- Reflection -->
             <label for="reflection">
-                Reflection:
+                Reflection (optional)
                 <button type="button" class="info-icon" onclick="toggleTooltip(this, 'Share your personal thoughts or reflections. For example, Watching my plants grow fills me with joy or I feel connected to nature while gardening.')">i</button>
             </label>
             <textarea id="reflection" name="reflection" th:field="*{reflection}" rows="2"></textarea>
 
             <!-- Mood -->
             <label for="mood">
-                Mood:
+                Mood (optional)
                 <button type="button" class="info-icon" onclick="toggleTooltip(this, 'How did this activity make you feel? For example, Excited to see my first tomato! or Peaceful after a day of pruning.')">i</button>
             </label>
             <input type="text" id="mood" name="mood" th:field="*{mood}" />
 
             <!-- Weather -->
             <label for="weather">
-                Weather:
+                Weather (optional)
                 <button type="button" class="info-icon" onclick="toggleTooltip(this, 'Describe the weather conditions during the activity. For example, It was a sunny day or A gentle rain made everything feel fresh.')">i</button>
             </label>
             <input type="text" id="weather" name="weather" th:field="*{weather}" />
 
 			<!-- Previous Story Achievements -->
             <label for="previousAchievements">
-                Previous Story Achievements:
+                Previous Story Achievements (optional)
                 <button type="button" class="info-icon" onclick="toggleTooltip(this, 'Link this story to any previous ones. For example, This is an update to my first post about growing lavender.')">i</button>
             </label>
             <textarea id="previousStoryAchievements" name="previousStoryAchievements" th:field="*{previousStoryAchievements}" rows="3"></textarea>
             
             <!-- Media Upload -->
-            <label for="mediaData">Upload Media (Images/Videos):</label>
+            <label for="mediaData">Upload Media (Images/Videos): (optional)</label>
             <input type="file" id="mediaData" name="mediaData" th:field="*{mediaData}" multiple accept="image/*,video/*" onchange="validateFileSize(this), validateFileCount(this), previewMedia()" />
 			
 			<!-- Display a message if the file count exceeds the limit -->

@@ -143,7 +143,7 @@
 		            <!-- Post Actions -->
 		            <div class="post-actions">
 		                <button class="action-button"
-						        th:onclick="'location.href=\'/showComment?postId=' + ${post.postId} + '\''">
+						        th:onclick="'toggleCommentSection(' + ${post.postId} + ')'">
 						    Comment
 						</button>
 						
@@ -161,6 +161,48 @@
 						</button>
 		            </div>
 		            
+		            <!-- Form starts here -->
+			        <form th:id="'comment-section-container-' + ${post.postId}" style="display: none;" class="comment_form_class" th:action="@{/posts/addComment(postId=${post.postId})}" th:object="${commentForm}" method="post">
+			            
+			            <div class="comment-box">
+			                <textarea id="comment-textarea-${post.postId}" th:field="*{commentText}"placeholder="Write your comment here..." rows="4"></textarea>
+			                <div class="reactions">
+						    <label>
+						        <input type="checkbox" th:field="*{selectedReactions}" value="🌿 Leaf It - Admired this post.">
+						        <span class="emoji-text">🌿 Leaf It</span> <span class="description-text">– Express admiration for this post.</span>
+						    </label>
+						    <label>
+						        <input type="checkbox" th:field="*{selectedReactions}" value="🌷 Sprout Some Love - Encouraging this post.">
+						        <span class="emoji-text">🌷 Sprout Some Love</span> <span class="description-text">– Show encouragement and appreciation.</span>
+						    </label>
+						    <label>
+						        <input type="checkbox" th:field="*{selectedReactions}" value="💧 Watering Can - Offers supportive care.">
+						        <span class="emoji-text">💧 Watering Can</span> <span class="description-text">– Offer supportive care and nurturing vibes.</span>
+						    </label>
+						    <label>
+						        <input type="checkbox" th:field="*{selectedReactions}" value="☀️ Sunshine - Sends positive energy.">
+						        <span class="emoji-text">☀️ Sunshine</span> <span class="description-text">– Send positive energy and warm wishes.</span>
+						    </label>
+						    <label>
+						        <input type="checkbox" th:field="*{selectedReactions}" value="🌱 Rooting For You - Cheering for this post">
+						        <span class="emoji-text">🌱 Rooting For You</span> <span class="description-text">– Show your support for their journey.</span>
+						    </label>
+						    <label>
+						        <input type="checkbox" th:field="*{selectedReactions}" value="🌸 Pledge – Commit to following this plant’s inspiring journey.">
+						        <span class="emoji-text">🌸 Pledge</span> <span class="description-text">– Commit to following this plant’s inspiring journey.</span>
+						    </label>
+						</div>
+						
+						<p class="error" th:text="${errorMessage}"></p>
+			
+			
+			                <div class="comment-actions">
+					            <!-- Submit Button -->
+					            <button class="createPostBtn" type="submit">Add Comment</button>
+			                </div>
+			            </div>
+			        </form>
+        
         			<!-- Comments Section -->
 					<div class="comments-container" th:id="'comments-container-' + ${post.postId}" style="display: none;">
 					    <h3>Comments</h3>
