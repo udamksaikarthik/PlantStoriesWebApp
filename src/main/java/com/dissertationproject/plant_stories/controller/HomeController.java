@@ -141,7 +141,7 @@ public class HomeController {
 		ModelAndView mv = new ModelAndView();
 		if(commentForm.getCommentText().isBlank() && commentForm.getSelectedReactions().isEmpty()) {
 	        redirectAttributes.addFlashAttribute("errorMessage","Please write a comment or select a reaction to submit your comment!");
-			mv.setViewName("redirect:/showComment?postId="+postId);
+			mv.setViewName("redirect:/");
 			return mv;
 		}
 
