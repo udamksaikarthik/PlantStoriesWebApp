@@ -79,7 +79,7 @@
         </div>
         
         <div class="user_posts_container">
-        	<h1>Your Posts</h1>
+        	<h1>Posts</h1>
 		        <!-- Loop through posts -->
 		        <div class="post-card" th:each="post : ${feedPosts}">
 		            <!-- Post Header -->
@@ -157,10 +157,10 @@
 		            
 		            <!-- Form starts here -->
 			        <form th:id="'comment-section-container-' + ${post.postId}" style="display: none;" class="comment_form_class" th:action="@{/posts/addComment(postId=${post.postId})}" th:object="${commentForm}" method="post">
-			            
+			            <p style="color: red; margin-bottom: 1em;"> Share your thoughts and opinions on this post story using comment and reactions provided below: </p>
 			            <div class="comment-box">
-			                <textarea id="comment-textarea-${post.postId}" th:field="*{commentText}"placeholder="Write your comment here..." rows="4"></textarea>
-			                <div class="reactions">
+			                <textarea style="margin-bottom: 1em;" id="comment-textarea-${post.postId}" th:field="*{commentText}"placeholder="Write your comment here..." rows="4"></textarea>
+			                <div class="reactions" style="margin-bottom: 1em;" >
 						    <label>
 						        <input type="checkbox" th:field="*{selectedReactions}" value="🌿 Leaf It - Admired this post.">
 						        <span class="emoji-text">🌿 Leaf It</span> <span class="description-text">– Express admiration for this post.</span>
@@ -190,7 +190,7 @@
 						<p class="error" th:text="${errorMessage}"></p>
 			
 			
-			                <div class="comment-actions">
+			                <div class="comment-actions" style="margin-bottom: 1em;" >
 					            <!-- Submit Button -->
 					            <button class="createPostBtn" type="submit">Add Comment</button>
 			                </div>
