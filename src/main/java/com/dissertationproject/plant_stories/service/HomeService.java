@@ -204,6 +204,28 @@ public class HomeService implements HomeServiceImpl{
 	}
 
 
+	@Override
+	public Integer liked(Long userId) {
+		// TODO Auto-generated method stub
+		return homeDao.liked(userId);
+	}
+
+
+	@Override
+	public Integer unliked(Long userId) {
+		// TODO Auto-generated method stub
+
+		return homeDao.unliked(userId);
+	}
+
+
+	@Override
+	public String getLikeCount() {
+		// TODO Auto-generated method stub
+		return homeDao.getLikeCount();
+	}
+
+
 
 
 

@@ -21,6 +21,7 @@ import com.dissertationproject.plant_stories.bean.CommentForm;
 import com.dissertationproject.plant_stories.bean.EditProfileDTO;
 import com.dissertationproject.plant_stories.bean.FeedPostMediaDTO;
 import com.dissertationproject.plant_stories.bean.Posts;
+import com.dissertationproject.plant_stories.dao.LikeCounterRepository;
 import com.dissertationproject.plant_stories.dao.UserRepository;
 import com.dissertationproject.plant_stories.model.Users;
 import com.dissertationproject.plant_stories.service.HomeServiceImpl;
@@ -58,6 +59,7 @@ public class HomeController {
         // Add the first name, last name, and role to the model
         if (user != null) {
             mv.addObject("userName", user.getUsername());
+    		mv.addObject("likedFlag", user.getLike_flag());
         }
         
         int totalNoOfPages = homeServiceImpl.getTotalNoOfPosts(pageSize);
@@ -85,6 +87,7 @@ public class HomeController {
         // Add the first name, last name, and role to the model
         if (user != null) {
             mv.addObject("userName", user.getUsername());
+    		mv.addObject("likedFlag", user.getLike_flag());
         }
 		mv.addObject("post", new Posts());
 		mv.setViewName("addpost.html");
@@ -189,6 +192,7 @@ public class HomeController {
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("profileDTO", profileDTO);
 		mv.addObject("userName", user.getUsername());
+		mv.addObject("likedFlag", user.getLike_flag());
 		mv.setViewName("editprofile.html");
 		return mv;
 	}
@@ -209,6 +213,7 @@ public class HomeController {
         userServiceImpl.editprofile(user.getId(), profileDTO.getBio());
         
 		mv.addObject("userName", user.getUsername());
+		mv.addObject("likedFlag", user.getLike_flag());
 		mv.setViewName("redirect:/profile");
 		return mv;
 	}
@@ -230,6 +235,7 @@ public class HomeController {
         
         mv.addObject("post", post);
 		mv.addObject("userName", user.getUsername());
+		mv.addObject("likedFlag", user.getLike_flag());
 		mv.setViewName("editpost.html");
 		return mv;
 	}
@@ -309,6 +315,7 @@ public class HomeController {
 	    // Add the first name, last name, and role to the model
 	    if (user != null) {
 	        mv.addObject("userName", user.getUsername());
+    		mv.addObject("likedFlag", user.getLike_flag());
 	    }
 	    if(!usersList.isEmpty()) {
 	    	mv.addObject("users", usersList);
@@ -330,6 +337,8 @@ public class HomeController {
         // Add the first name, last name, and role to the model
         if (user != null) {
             mv.addObject("userName", user.getUsername());
+    		mv.addObject("likedFlag", user.getLike_flag());
+    		mv.addObject("likeCount", homeServiceImpl.getLikeCount());
         }
 		mv.setViewName("about.html");
 		return mv;
@@ -349,9 +358,55 @@ public class HomeController {
         // Add the first name, last name, and role to the model
         if (user != null) {
             mv.addObject("userName", user.getUsername());
+    		mv.addObject("likedFlag", user.getLike_flag());
         }
         
 		mv.setViewName("notimplementedyet.html");
+		return mv;
+	}
+	
+	@GetMapping("/liked")
+	public ModelAndView liked() {
+		ModelAndView mv = new ModelAndView();
+		// Get the logged-in user's email (username in this case)
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();  // Get the logged-in user's email
+
+        // Fetch the user entity from the database using the email
+        Users user = userRepository.findByEmail(username);
+        
+        Long userId = user.getId();
+
+        // Add the first name, last name, and role to the model
+        if (user != null) {
+            mv.addObject("userName", user.getUsername());
+        }
+		Integer likeCount = homeServiceImpl.liked(userId);
+		mv.setViewName("about.html");
+		mv.addObject("likedFlag", true);
+		mv.addObject("likeCount", "Likes Count: "+likeCount);
+		return mv;
+	}
+	
+	@GetMapping("/unliked")
+	public ModelAndView unliked() {
+		ModelAndView mv = new ModelAndView();
+		// Get the logged-in user's email (username in this case)
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();  // Get the logged-in user's email
+
+        // Fetch the user entity from the database using the email
+        Users user = userRepository.findByEmail(username);
+
+        Long userId = user.getId();
+        // Add the first name, last name, and role to the model
+        if (user != null) {
+            mv.addObject("userName", user.getUsername());
+        }
+		Integer likeCount = homeServiceImpl.unliked(userId);
+		mv.setViewName("about.html");
+		mv.addObject("likedFlag", false);
+		mv.addObject("likeCount", "Likes Count: "+likeCount);
 		return mv;
 	}
 }

@@ -38,6 +38,13 @@
 			<a href="/projectIdeas">Project Ideas</a>
 			<a href="/projectTracker">Project Tracker</a>
 			<a href="/inventory">Inventory</a>
+			<a href="/liked" th:if="${!(likedFlag ?: false)}">
+			    <img alt="like" th:src="@{/images/like.png}">
+			</a>
+
+			<a href="/unliked" th:if="${(likedFlag ?: false)}">
+				<img alt="like" th:src="@{/images/liked.png}">
+			</a>
 		<form action="/logout" method="post">
 			    <button type="submit" class="form_btn_logout">Logout</button>
 		</form>
@@ -58,9 +65,17 @@
 			<a href="/projectIdeas">Project Ideas</a>
 			<a href="/projectTracker">Project Tracker</a>
 			<a href="/inventory">Inventory</a>
+			<a href="/liked" th:if="${!(likedFlag ?: false)}">
+			    <img alt="like" th:src="@{/images/like.png}">
+			</a>
+
+			<a href="/unliked" th:if="${(likedFlag ?: false)}">
+				<img alt="like" th:src="@{/images/liked.png}">
+			</a>
 		</div>
 		<div class="feed_container">
 					<h1>About - Plant Stories Web Application</h1>
+					<h4 class="likes_counter_class" th:text="${likeCount}"></h4>
 					<div class="straight_line_class"></div>
 					<div class="web_app_content_container">
 						<p>Welcome to Plant Stories, a unique storytelling platform where nature meets creativity! 🌿🌼 Here, you can embark on a magical journey of sharing your reflections, adventures, and discoveries in the world of plants, nature, and community gardening. 🌳✨
@@ -97,18 +112,17 @@
 									    
 									</a>
 							</div>
-						
-						</div>
+							
 					</div>
 		    </div>
-		
+		</div>
 		    <!-- Full-Screen Media Modal -->
 			<div id="fullscreen-modal" class="modal" onclick="closeMediaFullscreen()">
 			    <img id="modal-image" class="modal-content" style="display: none;">
 			    <video id="modal-video" class="modal-content" controls style="display: none;"></video>
 			</div>
 		</div>
-			
+		
 	
     <script type="text/javascript" th:src="@{/js/home.js}"></script>
 </body>

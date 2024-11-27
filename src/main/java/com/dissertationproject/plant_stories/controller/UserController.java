@@ -135,6 +135,7 @@ public class UserController {
             mv.addObject("userName", user.getUsername());
             userId = user.getId();
             mv.addObject("userBio", user.getBio());
+    		mv.addObject("likedFlag", user.getLike_flag());
         }
         
 
