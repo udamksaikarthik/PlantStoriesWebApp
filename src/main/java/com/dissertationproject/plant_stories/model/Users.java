@@ -54,6 +54,9 @@ public class Users {
     @Column(name = "bio", columnDefinition = "TEXT")
     private String bio; // Care routine (optional)
     
+    
+    private Boolean like_flag = false;
+    
     /**
      * Default constructor for JPA.
      */
@@ -167,6 +170,16 @@ public class Users {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+	public Boolean getLike_flag() {
+		return like_flag;
+	}
+
+	public void setLike_flag(Boolean like_flag) {
+		this.like_flag = like_flag;
+	}
+	
+	
 	
 	
     

@@ -40,6 +40,13 @@
 			<a href="/projectIdeas">Project Ideas</a>
 			<a href="/projectTracker">Project Tracker</a>
 			<a href="/inventory">Inventory</a>
+			<a href="/liked" th:if="${!(likedFlag ?: false)}">
+			    <img alt="like" th:src="@{/images/like.png}">
+			</a>
+
+			<a href="/unliked" th:if="${(likedFlag ?: false)}">
+				<img alt="like" th:src="@{/images/liked.png}">
+			</a>
 		<form action="/logout" method="post">
 			    <button type="submit" class="form_btn_logout">Logout</button>
 		</form>
@@ -60,6 +67,13 @@
 			<a href="/projectIdeas">Project Ideas</a>
 			<a href="/projectTracker">Project Tracker</a>
 			<a href="/inventory">Inventory</a>
+			<a href="/liked" th:if="${!(likedFlag ?: false)}">
+			    <img alt="like" th:src="@{/images/like.png}">
+			</a>
+
+			<a href="/unliked" th:if="${(likedFlag ?: false)}">
+				<img alt="like" th:src="@{/images/liked.png}">
+			</a>
 		</div>
 		<div class="feed_container">
 			 <h1>Edit Post</h1>

@@ -32,5 +32,11 @@ public interface HomeServiceImpl {
 
 	int getTotalNoOfPosts(int pageSize);
 
+	Integer liked(Long userId);
+
+	Integer unliked(Long userId);
+
+	String getLikeCount();
+
 
 }
