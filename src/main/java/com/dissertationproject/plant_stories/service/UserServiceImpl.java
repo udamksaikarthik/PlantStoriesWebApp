@@ -11,7 +11,7 @@ public interface UserServiceImpl {
 
 	void registerUser(@Valid Users users);
 
-	void editprofile(Long id, String bio);
+	void editprofile(Long id, String bio, String string);
 
 	String generateResetToken(String email);
 

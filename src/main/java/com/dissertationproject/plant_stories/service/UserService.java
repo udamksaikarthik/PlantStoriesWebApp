@@ -27,9 +27,9 @@ public class UserService implements UserServiceImpl{
 	}
 
 	@Override
-	public void editprofile(Long id, String bio) {
+	public void editprofile(Long id, String bio, String username) {
 		// TODO Auto-generated method stub
-		userDao.editprofile(id, bio);
+		userDao.editprofile(id, bio, username);
 	}
 
 	@Override
