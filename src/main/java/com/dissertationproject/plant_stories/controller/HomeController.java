@@ -204,7 +204,7 @@ public class HomeController {
         // Fetch the user entity from the database using the email
         Users user = userRepository.findByEmail(username);
         System.out.println("userID:"+ user.getId());
-        userServiceImpl.editprofile(user.getId(), profileDTO.getBio());
+        userServiceImpl.editprofile(user.getId(), profileDTO.getBio(), profileDTO.getUsername());
         
 		mv.addObject("userName", user.getUsername());
 		mv.setViewName("redirect:/profile");

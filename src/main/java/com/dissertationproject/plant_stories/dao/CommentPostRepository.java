@@ -11,5 +11,9 @@ import com.dissertationproject.plant_stories.model.CommentPost;
 public interface CommentPostRepository extends JpaRepository<CommentPost, Long>{
 
 	ArrayList<CommentPost> findAllByPostId(Long postId);
+	
+
+	ArrayList<CommentPost> findAllByUserId(Long postId);
+
 
 }

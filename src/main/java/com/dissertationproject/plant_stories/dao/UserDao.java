@@ -1,6 +1,7 @@
 package com.dissertationproject.plant_stories.dao;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
@@ -11,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import com.dissertationproject.plant_stories.bean.Users;
+import com.dissertationproject.plant_stories.model.CommentPost;
 import com.dissertationproject.plant_stories.model.PasswordResetToken;
 
 @Repository
@@ -19,6 +21,10 @@ public class UserDao {
 
 	@Autowired
 	private UserRepository userRepository;
+	
+
+	@Autowired
+	private CommentPostRepository commentPostRepository;
 	
 
 	@Autowired
@@ -66,14 +72,22 @@ public class UserDao {
         return userEntity;
 	}
 
-	public void editprofile(Long id, String bio) {
+	public void editprofile(Long id, String bio, String username) {
 		// TODO Auto-generated method stub
 		Optional<com.dissertationproject.plant_stories.model.Users> user = userRepository.findById(id);
 		
 		if(user.isPresent()) {
 			com.dissertationproject.plant_stories.model.Users existinguser = user.get();
 			existinguser.setBio(bio);
+			existinguser.setUsername(username);
 			userRepository.save(existinguser);
+			ArrayList<CommentPost> commentsAssociatedWithUserProfile = commentPostRepository.findAllByUserId(existinguser.getId());
+			if(!commentsAssociatedWithUserProfile.isEmpty()) {
+				for(CommentPost comment: commentsAssociatedWithUserProfile){
+					comment.setUsername(username);
+					commentPostRepository.save(comment);
+				}
+			}
 		}
 	}
 	
